@@ -8,12 +8,12 @@
 
 
 /**
+ * @brief Grafo orientato contenente nodi di tipo T.
+ * 
  * Classe che implementa un grafo orientato con nodi di tipo T.
  * Gli archi vengono memorizzati tramite matrice di adiacenza.
  * L'uguaglianza tra due dati di tipo T è verificata usando un funtore di
  * uguaglianza E.
- * 
- * @brief Grafo orientato contenente nodi di tipo T.
  * 
  * @param T tipo dei nodi
  * @param E funtore di uguaglianza tra due nodi
@@ -80,16 +80,22 @@ class Digraph {
 public:
 
     /**
-     * Costruttore di default, inizializza un grafo vuoto senza nodi e senza
-     * archi.
+     * @brief Costruttore default, genera un grafo vuoto.
      * 
-     * @brief Costruttore default, genera un grafo vuoto
+     * Inizializza un grafo vuoto senza nodi e senza archi.
+     * 
      * @post _nodes = nullptr
      * @post _nodes_number = 0
      * @post _adjacency_matrix = nullptr
      */
     Digraph():_nodes(nullptr), _nodes_number(0), _adjacency_matrix(nullptr) {}
 
+    /**
+     * @brief Costruttore di copia.
+     * 
+     * @param other Digraph da copiare
+     * @throw eccezione di allocazione della memoria
+     */
     Digraph(const Digraph& other):
             _nodes(nullptr), _nodes_number(0), _adjacency_matrix(nullptr) {
         try{
@@ -108,15 +114,72 @@ public:
         }
     }
 
+    /**
+     * @brief Distruttore.
+     * 
+     * Dealloca tutte le risorse allocate dinamicamente.
+     * 
+     * @post _nodes = nullptr
+     * @post _nodes_number = 0
+     * @post _adjacent_matrix = nullptr
+     */
     ~Digraph() {
         this->clear();
     }
 
+    /**
+     * @brief Operatore di assegnamento.
+     * 
+     * @param other Digraph da assegnare.
+	 * @return reference al Digraph this.
+	 * @throw Eccezione di allocazione della memoria.
+     */
     Digraph& operator= (const Digraph& other) {
-        //TODO
-        return this;
+        Digraph* tmp = new Digraph(other);
+        
+        std::swap(_nodes, tmp->_nodes);
+        std::swap(_nodes_number, tmp->_nodes_number);
+        std::swap(_adjacency_matrix, tmp->_adjacency_matrix);
+
+        return *this;
     }
 
+    /**
+     * @brief Ritorna il numero di nodi nel grafo.
+     * 
+     * @return  Numero di nodi.
+	 */
+    unsigned int nodesNumber() const {
+        return _nodes_number;
+    }
+
+    /**
+     * @brief Ritorna il numero di archi nel grafo.
+     * 
+     * @return  Numero di archi.
+	 */
+    unsigned int edgesNumber() const {
+        unsigned int edges = 0;
+        for(unsigned int i=0; i < _nodes_number; ++i) {
+            for(unsigned int j=0; j < _nodes_number; ++j) {
+                if(_adjacency_matrix[i][j]) {
+                    ++edges;
+                }
+            }
+        }
+
+        return edges;
+    }
+
+    /**
+     * @brief Inserimento del nodo nel grafo.
+     * 
+     * Il nodo viene inserito privo di archi entranti e uscenti (nodo isolato).
+     * 
+     * @param node Nodo da inserire.
+     * @post _nodes_number = _nodes_number + 1
+     * @throw Eccezione di allocazione di memoria.
+     */
     void addNode(const T& node) {
         assert(!exists(node));
 
@@ -175,8 +238,24 @@ public:
         ++_nodes_number;
     }
 
+    /**
+     * @brief Eliminazione del nodo dal grafo.
+     * 
+     * Il nodo e tutti i relativi archi entranti o uscenti vengono rimossi dal
+     * grafo.
+     * 
+     * @param node Nodo da rimuovere.
+     * @pre exists(node)
+     * @post _nodes_number = _nodes_number - 1
+     * @throw Eccezione di allocazione di memoria.
+     */
     void removeNode(const T& node) {
         assert(exists(node));
+
+        if(_nodes_number == 1) {
+            clear();
+            return;
+        }
 
         unsigned int node_index = nodeIndex(node);
         T* old_nodes = _nodes;
@@ -241,20 +320,36 @@ public:
         --_nodes_number;
     }
 
+    /**
+     * @brief Aggiunta dell'arco al grafo.
+     * 
+     * @param u Nodo sorgende dell'arco da aggiungere.
+     * @param v Nodo destinazione dell'arco da aggiungere.
+     * @pre exists(u)
+     * @pre exists(v)
+     * @pre !hasEdge(u, v)
+     * @post hasEdge(u, v)
+     */
     void addEdge(const T& u, const T& v) {
         assert(!hasEdge(u, v));
 
         setEdge(u, v);
     }
 
+    /**
+     * @brief Eliminazione dell'arco dal grafo.
+     * 
+     * @param u Nodo sorgende dell'arco da rimuovere.
+     * @param v Nodo destinazione dell'arco da rimuovere.
+     * @pre exists(u)
+     * @pre exists(v)
+     * @pre hasEdge(u, v)
+     * @post !hasEdge(u, v)
+     */
     void removeEdge(const T& u, const T& v) {
         assert(hasEdge(u, v));
 
         setEdge(u, v);
-    }
-
-    unsigned int nodesNumber() const {
-        return _nodes_number;
     }
 
     bool exists(const T& u) const {
