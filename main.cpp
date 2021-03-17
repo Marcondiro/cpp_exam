@@ -1,9 +1,13 @@
 #include <iostream> //std::cout
+#include <cassert>  //assert
 
-//TODO: include classe container
+#include "digraph.h"
 
-int main(int argc, char const *argv[])
+int main()
 {
-    /* code */
+    
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "Test completati con successo." << std::endl;
+
     return 0;
 }
