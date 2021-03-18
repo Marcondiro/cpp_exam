@@ -43,13 +43,50 @@ struct Person_equal {
 
 /**
  * @brief Funzione helper che genera un digraph di interi popolato.
+ * 
+ * Il grafo risultante rispecchia quello presente nella traccia del progetto. 
  */
-Digraph<int, Int_equal> test_helper_int();
+Digraph<int, Int_equal> test_helper_int() {
+    Digraph<int, Int_equal> g;
+
+    for(int i = 1; i <= 6; ++i) {
+        g.addNode(i);
+    }
+
+    g.addEdge(1, 2);
+    g.addEdge(1, 3);
+    g.addEdge(2, 4);
+    g.addEdge(3, 4);
+    g.addEdge(3, 5);
+    g.addEdge(4, 6);
+    g.addEdge(5, 5);
+    g.addEdge(5, 6);
+
+    return g;
+}
 
 /**
  * @brief Funzione helper che genera un digraph di Person popolato.
  */
-Digraph<Person, Person_equal> test_helper_person();
+Digraph<Person, Person_equal> test_helper_person() {
+    Digraph<Person, Person_equal> g;
+    Person p[3] = {
+        {"Alice", "Shrdlu", 'G'},
+        {"Bob", "Etaoin", 'A'},
+        {"Carl", "Thug", 'B'}
+    };
+
+    for(int i = 0; i < 3; ++i) {
+        g.addNode(p[i]);
+    }
+
+    g.addEdge(p[0], p[1]);
+    g.addEdge(p[1], p[0]);
+    g.addEdge(p[2], p[0]);
+    g.addEdge(p[2], p[1]);
+
+    return g;
+}
 
 /**
  * @brief Test costruttori di Digraph.
@@ -82,17 +119,18 @@ void constructor_test() {
     assert(graph_int->exists(-1) == tmp_int.exists(-1));
     assert(graph_int->hasEdge(1,2) == tmp_int.hasEdge(1,2));
     assert(graph_int->hasEdge(2,1) == tmp_int.hasEdge(2,1));
-    std::cout << (*graph_int) << std::endl;
+    //std::cout << (*graph_int) << std::endl;
+    
     delete graph_int;
     graph_int = nullptr;
 
     graph_person = new Digraph<Person, Person_equal> (tmp_person);
     assert(graph_person->nodesNumber() == tmp_person.nodesNumber());
     assert(graph_person->edgesNumber() == tmp_person.edgesNumber());
-    std::cout << (*graph_person) << std::endl;
+    //std::cout << (*graph_person) << std::endl;
+    
     delete graph_person;
     graph_person = nullptr;
-
 }
 
 /**
@@ -110,6 +148,8 @@ void assignment_test() {
     assert(g1.exists(-1) == g2.exists(-1));
     assert(g1.hasEdge(1,2) == g2.hasEdge(1,2));
     assert(g1.hasEdge(2,1) == g2.hasEdge(2,1));
+    //std::cout << g1 << std::endl;
+    //std::cout << g2 << std::endl;
 
     Digraph<Person, Person_equal> g3;
     Digraph<Person, Person_equal> g4;
@@ -118,60 +158,60 @@ void assignment_test() {
     g4 = g3;
     assert(g3.nodesNumber() == g4.nodesNumber());
     assert(g3.edgesNumber() == g4.edgesNumber());
+    //std::cout << g3 << std::endl;
+    //std::cout << g4 << std::endl;
+}
+
+/**
+ * @brief Test modifiche contenuto
+ */
+void edit_test() {
+    Digraph<int, Int_equal> g1 = test_helper_int();
+    Digraph<Person, Person_equal> g2 = test_helper_person();
+
+    assert(g1.nodesNumber() == 6);
+    assert(g1.edgesNumber() == 8);
+    assert(g2.nodesNumber() == 3);
+    assert(g2.edgesNumber() == 4);
+
+    for(int i=0; i > -200; --i) {
+        g1.addNode(i);
+    }
+    assert(g1.nodesNumber() == 206);
+
+    for(int i=0; i > -200; i -= 2) {
+        for(int j=-1; j > -200; j -= 2) {
+            g1.addEdge(i, j);
+        }
+    }
+    assert(g1.edgesNumber() == 10008);
+
+    g2.addNode(Person("Mario", "Rossi", 'V'));
+    assert(g2.nodesNumber() == 4);
+
+    g2.addEdge(Person("Alice", "Shrdlu", 'G'), Person("Mario", "Rossi", 'V'));
+    assert(g2.edgesNumber() == 5);
 }
 
 int main()
 {
+#ifndef NDEBUG
     constructor_test();
     std::cout << "Test costruttori completati con successo." << std::endl;
 
     assignment_test();
     std::cout << "Test assegnamento completati con successo." << std::endl;
 
+    edit_test();
+    std::cout <<
+        "Test modifiche al contenuto del Digraph completate con successo." <<
+        std::endl;
+
     std::cout << "-----------------------------" << std::endl;
     std::cout << "Test completati con successo." << std::endl;
+#endif
 
     return 0;
-}
-
-
-Digraph<int, Int_equal> test_helper_int() {
-    Digraph<int, Int_equal> g;
-
-    for(int i = 1; i <= 6; ++i) {
-        g.addNode(i);
-    }
-
-    g.addEdge(1, 2);
-    g.addEdge(1, 3);
-    g.addEdge(2, 4);
-    g.addEdge(3, 4);
-    g.addEdge(3, 5);
-    g.addEdge(4, 6);
-    g.addEdge(5, 5);
-    g.addEdge(5, 6);
-
-    return g;
-}
-
-Digraph<Person, Person_equal> test_helper_person() {
-    Digraph<Person, Person_equal> g;
-    Person p[3] = {
-        {"Alice", "Shrdlu", 'G'},
-        {"Bob", "Etaoin", 'A'},
-        {"Carl", "Thug", 'B'}
-    };
-
-    for(int i = 0; i < 3; ++i) {
-        g.addNode(p[i]);
-    }
-
-    g.addEdge(p[0], p[1]);
-    g.addEdge(p[1], p[0]);
-    g.addEdge(p[2], p[0]);
-    g.addEdge(p[2], p[1]);
-
-    return g;
 }
 
 /**
