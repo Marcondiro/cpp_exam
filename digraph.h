@@ -477,11 +477,11 @@ public:
  * Digraph sullo stream rappresentato come matrice di adiacenza.
  * 
  * @param os Stream di output
- * @param ol Digraph da inviare
+ * @param digraph Digraph da inviare
  * @return Reference allo stream di output
  */
 template <typename T, typename E>
-std::ostream &operator<<(std::ostream &os, const Digraph<T,E> &digraph) {
+std::ostream &operator<<(std::ostream &os, const Digraph<T,E>& digraph) {
 	typename Digraph<T,E>::const_iterator i_row, i_column;
 
 	for(i_column  = digraph.begin(); i_column != digraph.end(); ++i_column) {
