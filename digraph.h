@@ -124,7 +124,7 @@ public:
      * @post _adjacent_matrix = nullptr
      */
     ~Digraph() {
-        this->clear();
+        clear();
     }
 
     /**
@@ -352,6 +352,12 @@ public:
         setEdge(u, v);
     }
 
+    /**
+     * @brief Determina l'esistenza di un nodo nel grafo. 
+     * 
+     * @param u Nodo da cercare.
+     * @return true se il nodo è presente nel grafo, false altrimenti.
+     */
     bool exists(const T& u) const {
         for(unsigned int i=0; i < _nodes_number; ++i) {
             if(_equal(_nodes[i], u)) {
@@ -361,10 +367,18 @@ public:
         return false;
     }
 
+    /**
+     * @brief Determina l'esistenza di un arco nel grafo. 
+     * 
+     * @param u Nodo sorgende dell'arco da cercare.
+     * @param v Nodo destinazione dell'arco da cercare.
+     * @pre exists(u)
+     * @pre exists(v)
+     * @return true se l'arco è presente nel grafo, false altrimenti.
+     */
     bool hasEdge(const T& u, const T& v) const {
-        if(!exists(u) || !exists(v)) {
-            return false;
-        }
+        assert(exists(u));
+        assert(exists(v));
 
         unsigned int u_index = nodeIndex(u);
         unsigned int v_index = nodeIndex(v);
@@ -372,32 +386,99 @@ public:
         return _adjacency_matrix[u_index][v_index];
     }
 
-    typedef const T* const_iterator;
+    class const_iterator {
+		const T* _ptr;
+
+        // La classe container deve essere messa friend dell'iteratore per poter
+		// usare il costruttore di inizializzazione.
+		friend class Digraph;
+
+		// Costruttore privato di inizializzazione usato dalla classe container
+		// tipicamente nei metodi begin e end
+		explicit const_iterator(const T* node) : _ptr(node) {}
+
+	public:
+		typedef std::forward_iterator_tag iterator_category;
+		typedef T                         value_type;
+		typedef ptrdiff_t                 difference_type;
+		typedef const T*                  pointer;
+		typedef const T&                  reference;
+
+		const_iterator() : _ptr(nullptr) {}
+		
+		const_iterator(const const_iterator& other) : _ptr(other._ptr) {}
+
+		const_iterator& operator=(const const_iterator& other) {
+			_ptr = other._ptr;
+			return *this;
+		}
+
+		/**
+         * @brief Ritorna il dato riferito dall'iteratore (dereferenziamento).
+         */
+		reference operator*() const {
+			return *_ptr;
+		}
+
+		/**
+         * @brief Ritorna il puntatore al dato riferito dall'iteratore.
+         */
+		pointer operator->() const {
+			return _ptr;
+		}
+		
+		// Operatore di iterazione post-incremento (i++)
+		const_iterator operator++(int) {
+			const_iterator tmp(*this);
+			++_ptr;
+			return tmp;
+		}
+
+		// Operatore di iterazione pre-incremento (++i)
+		const_iterator& operator++() {
+			++_ptr;
+			return *this;
+		}
+
+		// Uguaglianza
+		bool operator==(const const_iterator &other) const {
+			return (_ptr == other._ptr);
+		}
+		
+		// Diversita'
+		bool operator!=(const const_iterator &other) const {
+			return !(*this == other);
+		}
+	}; // classe const_iterator
 
     /**
-     * Ritorna l'iteratore all'inizio della sequenza di nodi
+     * @brief Ritorna l'iteratore all'inizio della sequenza di nodi
+     * 
+     * @return const_iterator all'inizio della sequenza di nodi
      */
 	const_iterator begin() const {
-		return _nodes;
+		return const_iterator(_nodes);
 	}
 	
 	/**
-     * Ritorna l'iteratore alla fine della sequenza di nodi
+     * @brief Ritorna l'iteratore alla fine della sequenza di nodi
+     * 
+     * @return const_iterator alla fine della sequenza di nodi
      */
 	const_iterator end() const {
-		return _nodes + _nodes_number;
+		return const_iterator(_nodes + _nodes_number);
 	}
 
 }; //class Digraph
 
 /**
-	Ridefinizione dell'operatore di stream per la stampa del contenuto del
-    Digraph
-
-	@param os Stream di output
-	@param ol Digraph da stampare
-	@return Reference allo stream di output
-*/
+ * Ridefinizione dell'operatore di stream per la stampa del contenuto del
+ * Digraph
+ * 
+ * @param os Stream di output
+ * @param ol Digraph da stampare
+ * @return Reference allo stream di output
+ */
 template <typename T, typename E>
 std::ostream &operator<<(std::ostream &os, const Digraph<T,E> &digraph) {
 	typename Digraph<T,E>::const_iterator i_row, i_column;
