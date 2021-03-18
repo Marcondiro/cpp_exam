@@ -4,7 +4,7 @@
 #include <algorithm> // std::swap
 #include <iterator> // std::forward_iterator_tag
 #include <cstddef> // std::ptrdiff_t
-#include <cassert>  //assert
+#include <cassert> //assert
 
 
 /**
@@ -23,8 +23,46 @@ class Digraph {
     T* _nodes; ///< Puntatore ad array contenente i nodi
     unsigned int _nodes_number; ///< Numero di nodi
     bool** _adjacency_matrix; ///< Matrice di adiacenza
+    unsigned int _edges_number; ///< Numero di archi
 
-    E _equal;  ///< Istanza del funtore di uguaglianza 
+    E _equal;  ///< Istanza del funtore di uguaglianza
+
+    /**
+     * @brief Costruttore che inizializza un Digraph di dimensione specificata.
+     * 
+     * Costruttore PRIVATE che inizializza un Digraph avente il numero di nodi
+     * specificato e privo di archi.
+     * 
+     * @param nodes_number Numero di nodi.
+     * @post _nodes_number = nodes_number
+     * @post _edges_number = 0
+     * @throw eccezione di allocazione della memoria
+     */
+    Digraph(unsigned int nodes_number):_nodes(nullptr), _nodes_number(0),
+            _adjacency_matrix(nullptr), _edges_number(0) {
+        try {
+            _nodes = new T[nodes_number];
+
+            _adjacency_matrix = new bool*[nodes_number];
+            for(unsigned int i = 0; i < nodes_number; ++i) {
+                _adjacency_matrix[i] = nullptr;
+            }
+            for(unsigned int i = 0; i < nodes_number; ++i) {
+                _adjacency_matrix[i] = new bool[nodes_number];
+            }
+        } catch(...) {
+            clear();
+            throw;
+        }
+
+        for(unsigned int i = 0; i < nodes_number; ++i) {
+            for(unsigned int j = 0; j < nodes_number; ++j) {
+                _adjacency_matrix[i][j] = false;
+            }
+        }
+        _nodes_number = nodes_number;
+        _edges_number = 0;
+    }
 
     void clear() {
         delete[] _nodes;
@@ -38,19 +76,7 @@ class Digraph {
         _adjacency_matrix = nullptr;
 
         _nodes_number = 0;
-    }
-
-    void clear_temps(T*& tmp_nodes, unsigned int tmp_nodes_number,
-            bool**& tmp_matrix) const {
-        delete[] tmp_nodes;
-        tmp_nodes = nullptr;
-
-        for(unsigned int i = 0; i < tmp_nodes_number; ++i) {
-            delete[] tmp_matrix[i];
-            tmp_matrix[i] = nullptr;
-        }
-        delete[] tmp_matrix;
-        tmp_matrix = nullptr;
+        _edges_number = 0;
     }
 
     unsigned int nodeIndex(const T& u) const {
@@ -86,8 +112,10 @@ public:
      * @post _nodes = nullptr
      * @post _nodes_number = 0
      * @post _adjacency_matrix = nullptr
+     * @post _edges_number = 0
      */
-    Digraph():_nodes(nullptr), _nodes_number(0), _adjacency_matrix(nullptr) {}
+    Digraph():_nodes(nullptr), _nodes_number(0), _adjacency_matrix(nullptr),
+            _edges_number(0) {}
 
     /**
      * @brief Costruttore di copia.
@@ -95,22 +123,22 @@ public:
      * @param other Digraph da copiare
      * @throw eccezione di allocazione della memoria
      */
-    Digraph(const Digraph& other):
-            _nodes(nullptr), _nodes_number(0), _adjacency_matrix(nullptr) {
-        try{
-            for(unsigned int i=0; i<other._nodes_number; ++i) {
-                addNode(other._nodes[i]);
-            }
-        } catch(...) {
-            clear();
-            throw;
+    Digraph(const Digraph& other): _nodes(nullptr), _nodes_number(0),
+            _adjacency_matrix(nullptr), _edges_number(0) {        
+        Digraph tmp(other._nodes_number);
+
+        for(unsigned int i = 0; i < tmp._nodes_number; ++i) {
+            tmp._nodes[i] = other._nodes[i];
         }
 
-        for(unsigned int i=0; i<_nodes_number; ++i) {
-            for(unsigned int j=0; j<_nodes_number; ++j) {
-                _adjacency_matrix[i][j] = other._adjacency_matrix[i][j];
+        for(unsigned int i=0; i < tmp._nodes_number; ++i) {
+            for(unsigned int j=0; j < tmp._nodes_number; ++j) {
+                tmp._adjacency_matrix[i][j] = other._adjacency_matrix[i][j];
             }
         }
+        tmp._edges_number = other._edges_number;
+
+        swap(tmp);
     }
 
     /**
@@ -134,16 +162,22 @@ public:
 	 * @throw Eccezione di allocazione della memoria.
      */
     Digraph& operator= (const Digraph& other) {
-        Digraph* tmp = new Digraph(other);
-        
-        std::swap(_nodes, tmp->_nodes);
-        std::swap(_nodes_number, tmp->_nodes_number);
-        std::swap(_adjacency_matrix, tmp->_adjacency_matrix);
-
-        delete tmp;
-        tmp = nullptr;
+        Digraph tmp(other);
+        swap(tmp);
  
         return *this;
+    }
+
+    /**
+     * @brief Swap tra *this e il Digraph passato.
+     * 
+     * @param other Digraph con cui eseguire la swap
+     */
+    void swap(Digraph& other) {
+        std::swap(_nodes, other._nodes);
+        std::swap(_nodes_number, other._nodes_number);
+        std::swap(_adjacency_matrix, other._adjacency_matrix);
+        std::swap(_edges_number, other._edges_number);
     }
 
     /**
@@ -161,16 +195,7 @@ public:
      * @return  Numero di archi.
 	 */
     unsigned int edgesNumber() const {
-        unsigned int edges = 0;
-        for(unsigned int i=0; i < _nodes_number; ++i) {
-            for(unsigned int j=0; j < _nodes_number; ++j) {
-                if(_adjacency_matrix[i][j]) {
-                    ++edges;
-                }
-            }
-        }
-
-        return edges;
+        return _edges_number;
     }
 
     /**
@@ -185,59 +210,25 @@ public:
     void addNode(const T& node) {
         assert(!exists(node));
 
-        T* old_nodes = _nodes;
-        bool** old_matrix = _adjacency_matrix;
+        Digraph tmp(_nodes_number + 1);
 
-        try {
-            _nodes = new T[_nodes_number + 1];
-        } catch(...) {
-            _nodes = old_nodes;
-            throw;
+        for(unsigned int i = 0; i < _nodes_number; ++i) {
+            tmp._nodes[i] = _nodes[i];
         }
+        tmp._nodes[_nodes_number] = node;
 
-        try {
-            _adjacency_matrix = new bool*[_nodes_number + 1];
-        } catch(...) {
-            delete[] _nodes;
-            _nodes = old_nodes;
-            _adjacency_matrix = old_matrix;
-            throw;
-        }
-
-        for(unsigned int i = 0; i < _nodes_number+1; ++i) {
-            try{
-                _adjacency_matrix[i] = new bool[_nodes_number+1];
-            } catch(...) {
-                delete[] _nodes;
-                _nodes = old_nodes;
-                for(unsigned int j = 0; j < i; ++j) {
-                    delete[] _adjacency_matrix[j];
-                    _adjacency_matrix[j] = nullptr;
-                }
-                delete _adjacency_matrix;
-                _adjacency_matrix = old_matrix;
-                throw;
+        for(unsigned int i = 0; i < _nodes_number; ++i) {
+            for(unsigned int j = 0; j < _nodes_number; ++j) {
+                tmp._adjacency_matrix[i][j] = _adjacency_matrix[i][j];
             }
         }
-
-        for(unsigned int i = 0; i<_nodes_number; ++i) {
-            _nodes[i] = old_nodes[i];
+        for(unsigned int i = 0; i < _nodes_number; ++i) {
+            tmp._adjacency_matrix[i][_nodes_number] = false;
+            tmp._adjacency_matrix[_nodes_number][i] = false;
         }
-        _nodes[_nodes_number] = node;
+        tmp._edges_number = _edges_number;
 
-        for(unsigned int i = 0; i<_nodes_number; ++i) {
-            for(unsigned int j = 0; j<_nodes_number; ++j) {
-                _adjacency_matrix[i][j] = old_matrix[i][j];
-            }
-        }
-        for(unsigned int i = 0; i<_nodes_number+1; ++i) {
-            _adjacency_matrix[i][_nodes_number] = false;
-            _adjacency_matrix[_nodes_number][i] = false;
-        }
-
-        clear_temps(old_nodes, _nodes_number, old_matrix);
-
-        ++_nodes_number;
+        swap(tmp);
     }
 
     /**
@@ -252,60 +243,23 @@ public:
      * @throw Eccezione di allocazione di memoria.
      */
     void removeNode(const T& node) {
+        assert(_nodes_number > 0);
         assert(exists(node));
 
-        if(_nodes_number == 1) {
-            clear();
-            return;
-        }
-
+        Digraph tmp(_nodes_number - 1);
         unsigned int node_index = nodeIndex(node);
-        T* old_nodes = _nodes;
-        bool** old_matrix = _adjacency_matrix;
 
-        try {
-            _nodes = new T[_nodes_number - 1];
-        } catch(...) {
-            _nodes = old_nodes;
-            throw;
-        }
-
-        try {
-            _adjacency_matrix = new bool*[_nodes_number - 1];
-        } catch(...) {
-            delete[] _nodes;
-            _nodes = old_nodes;
-            _adjacency_matrix = old_matrix;
-            throw;
-        }
-
-        for(unsigned int i = 0; i < _nodes_number-1; ++i) {
-            try{
-                _adjacency_matrix[i] = new bool[_nodes_number - 1];
-            } catch(...) {
-                delete[] _nodes;
-                _nodes = old_nodes;
-                for(unsigned int j = 0; j < i; ++j) {
-                    delete[] _adjacency_matrix[j];
-                    _adjacency_matrix[j] = nullptr;
-                }
-                delete _adjacency_matrix;
-                _adjacency_matrix = old_matrix;
-                throw;
-            }
-        }
-
-        for(unsigned int i = 0; i<_nodes_number-1; ++i) {
+        for(unsigned int i = 0; i < tmp._nodes_number; ++i) {
             if(node_index > i) {
-                _nodes[i] = old_nodes[i];
+                tmp._nodes[i] = _nodes[i];
             }
             else{
-                _nodes[i] = old_nodes[i+1];
+                tmp._nodes[i] = _nodes[i+1];
             }
         }
 
-        for(unsigned int i = 0; i<_nodes_number-1; ++i) {
-            for(unsigned int j = 0; j < _nodes_number-1; ++j) {
+        for(unsigned int i = 0; i < tmp._nodes_number; ++i) {
+            for(unsigned int j = 0; j < tmp._nodes_number; ++j) {
                 unsigned int k = i, l = j;
                 if(k >= node_index) {
                     ++k;
@@ -313,13 +267,15 @@ public:
                 if(l >= node_index) {
                     ++l;
                 }
-                _adjacency_matrix[i][j] = old_matrix[k][l];
+                tmp._adjacency_matrix[i][j] = _adjacency_matrix[k][l];
+                
+                if(_adjacency_matrix[i][j]) {
+                    ++tmp._edges_number;
+                }
             }
         }
 
-        clear_temps(old_nodes, _nodes_number, old_matrix);
-
-        --_nodes_number;
+        swap(tmp);
     }
 
     /**
@@ -336,6 +292,8 @@ public:
         assert(!hasEdge(u, v));
 
         setEdge(u, v);
+
+        ++_edges_number;
     }
 
     /**
@@ -349,9 +307,12 @@ public:
      * @post !hasEdge(u, v)
      */
     void removeEdge(const T& u, const T& v) {
+        assert(_edges_number > 0);
         assert(hasEdge(u, v));
 
         setEdge(u, v);
+
+        --_edges_number;
     }
 
     /**
