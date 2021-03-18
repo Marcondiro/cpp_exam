@@ -140,6 +140,9 @@ public:
         std::swap(_nodes_number, tmp->_nodes_number);
         std::swap(_adjacency_matrix, tmp->_adjacency_matrix);
 
+        delete tmp;
+        tmp = nullptr;
+ 
         return *this;
     }
 
