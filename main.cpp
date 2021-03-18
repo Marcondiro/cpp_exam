@@ -167,30 +167,33 @@ void assignment_test() {
  */
 void edit_test() {
     Digraph<int, Int_equal> g1 = test_helper_int();
-    Digraph<Person, Person_equal> g2 = test_helper_person();
-
     assert(g1.nodesNumber() == 6);
     assert(g1.edgesNumber() == 8);
-    assert(g2.nodesNumber() == 3);
-    assert(g2.edgesNumber() == 4);
 
-    for(int i=0; i > -200; --i) {
-        g1.addNode(i);
+    for(int i = 0; i < 200; ++i) {
+        g1.addNode(-i);
     }
     assert(g1.nodesNumber() == 206);
 
-    for(int i=0; i > -200; i -= 2) {
-        for(int j=-1; j > -200; j -= 2) {
-            g1.addEdge(i, j);
+    for(int i = 0; i < 200; i += 2) {
+        for(int j = 1; j < 200; j += 2) {
+            g1.addEdge(-i, -j);
         }
     }
     assert(g1.edgesNumber() == 10008);
+
+    Digraph<Person, Person_equal> g2 = test_helper_person();
+
+    assert(g2.nodesNumber() == 3);
+    assert(g2.edgesNumber() == 4);
 
     g2.addNode(Person("Mario", "Rossi", 'V'));
     assert(g2.nodesNumber() == 4);
 
     g2.addEdge(Person("Alice", "Shrdlu", 'G'), Person("Mario", "Rossi", 'V'));
     assert(g2.edgesNumber() == 5);
+
+    //TODO test removes
 }
 
 int main()
@@ -206,6 +209,8 @@ int main()
     std::cout <<
         "Test modifiche al contenuto del Digraph completate con successo." <<
         std::endl;
+
+    //todo test constness
 
     std::cout << "-----------------------------" << std::endl;
     std::cout << "Test completati con successo." << std::endl;
