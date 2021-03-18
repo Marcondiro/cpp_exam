@@ -18,7 +18,6 @@
  * @param T tipo dei nodi
  * @param E funtore di uguaglianza tra due nodi
  */
-
 template <typename T, typename E>
 class Digraph {
     T* _nodes; ///< Puntatore ad array contenente i nodi
@@ -472,25 +471,28 @@ public:
 }; //class Digraph
 
 /**
- * Ridefinizione dell'operatore di stream per la stampa del contenuto del
- * Digraph
+ * @brief Invia il Digraph sullo stream
+ * 
+ * Ridefinizione dell'operatore di stream per l'invio del contenuto del
+ * Digraph sullo stream rappresentato come matrice di adiacenza.
  * 
  * @param os Stream di output
- * @param ol Digraph da stampare
+ * @param ol Digraph da inviare
  * @return Reference allo stream di output
  */
 template <typename T, typename E>
 std::ostream &operator<<(std::ostream &os, const Digraph<T,E> &digraph) {
 	typename Digraph<T,E>::const_iterator i_row, i_column;
 
-	for(i_row  = digraph.begin(); i_row != digraph.end(); ++i_row) {
-        os << "\t" << *i_row;        
+	for(i_column  = digraph.begin(); i_column != digraph.end(); ++i_column) {
+        os << "\t" << *i_column;        
     }
 
-    for(i_column  = digraph.begin(); i_column != digraph.end(); ++i_column) {
+    for(i_row  = digraph.begin(); i_row != digraph.end(); ++i_row) {
         os << std::endl;
-        os << *i_column;
-        for(i_row  = digraph.begin(); i_row != digraph.end(); ++i_row) {
+        os << *i_row;
+        for(i_column  = digraph.begin(); i_column != digraph.end(); ++i_column)
+        {
             os << "\t" << digraph.hasEdge(*i_row, *i_column);
         }
     }
