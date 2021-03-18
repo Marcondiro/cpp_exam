@@ -7,6 +7,8 @@ main.exe: main.o
 main.o: main.cpp digraph.h
 	$(CXX) $(CXXFLAGS) -c main.cpp -o main.o
 
-.PHONY: clear
+.PHONY: clear docs
 clear:
 	rm *.o *.exe
+docs:
+	doxygen
