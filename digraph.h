@@ -5,6 +5,7 @@
 #include <iterator> // std::forward_iterator_tag
 #include <cstddef> // std::ptrdiff_t
 #include <cassert> //assert
+#include <ostream> // std::ostream
 
 
 /**
@@ -20,7 +21,7 @@
  */
 template <typename T, typename E>
 class Digraph {
-    T* _nodes; ///< Puntatore ad array contenente i nodi
+    T* _nodes; ///< Puntatore ad array contenente gli identificativi dei nodi
     unsigned int _nodes_number; ///< Numero di nodi
     bool** _adjacency_matrix; ///< Matrice di adiacenza
     unsigned int _edges_number; ///< Numero di archi
@@ -38,7 +39,7 @@ class Digraph {
      * @post _edges_number = 0
      * @throw eccezione di allocazione della memoria
      */
-    explicit Digraph(unsigned int nodes_number): _nodes(nullptr),
+    explicit Digraph(const unsigned int& nodes_number): _nodes(nullptr),
             _nodes_number(0), _adjacency_matrix(nullptr), _edges_number(0) {
         
         if(nodes_number == 0) {
@@ -68,6 +69,11 @@ class Digraph {
         }
     }
 
+    /**
+     * @brief Funzione che dealloca tutte le risorse allocate dinamicamente
+     * 
+     * La funzione mantiene la consistenza dell'oggetto. 
+     */
     void clear() {
         delete[] _nodes;
         _nodes = nullptr;
@@ -83,19 +89,30 @@ class Digraph {
         _edges_number = 0;
     }
 
+    /**
+     * @brief funzione che ritorna la posizione del nodo
+     * 
+     * @param u Nodo sorgende da cercare.
+     * @return Posizione di u in _nodes, _nodes_number se u non presente.
+     */
     unsigned int nodeIndex(const T& u) const {
-        assert(exists(u));
-
         for(unsigned int i=0; i < _nodes_number; ++i) {
             if(_equal(_nodes[i], u)) {
                 return i;
             }
         }
-
-        //nodo non trovato, in caso la assert venga ignorata dal compilatore
         return _nodes_number;
     }
 
+    /**
+     * @brief funzione che inverte lo stato dell'arco indicato.
+     * 
+     * Se l'arco esiste viene eliminato.
+     * Se l'arco non esiste viene creato.
+     * 
+     * @param u Nodo sorgende dell'arco.
+     * @param v Nodo destinazione dell'arco.
+     */
     void setEdge(const T& u, const T& v) {
         assert(exists(u));
         assert(exists(v));
@@ -153,6 +170,7 @@ public:
      * @post _nodes = nullptr
      * @post _nodes_number = 0
      * @post _adjacent_matrix = nullptr
+     * @post _edges_number = 0
      */
     ~Digraph() {
         clear();
@@ -208,6 +226,7 @@ public:
      * Il nodo viene inserito privo di archi entranti e uscenti (nodo isolato).
      * 
      * @param node Nodo da inserire.
+     * @pre !exists(node)
      * @post _nodes_number = _nodes_number + 1
      * @throw Eccezione di allocazione di memoria.
      */
@@ -247,7 +266,6 @@ public:
      * @throw Eccezione di allocazione di memoria.
      */
     void removeNode(const T& node) {
-        assert(_nodes_number > 0);
         assert(exists(node));
 
         Digraph tmp(_nodes_number - 1);
@@ -311,7 +329,6 @@ public:
      * @post !hasEdge(u, v)
      */
     void removeEdge(const T& u, const T& v) {
-        assert(_edges_number > 0);
         assert(hasEdge(u, v));
 
         setEdge(u, v);
@@ -326,12 +343,7 @@ public:
      * @return true se il nodo è presente nel grafo, false altrimenti.
      */
     bool exists(const T& u) const {
-        for(unsigned int i=0; i < _nodes_number; ++i) {
-            if(_equal(_nodes[i], u)) {
-                return true;
-            }
-        }
-        return false;
+        return nodeIndex(u) != _nodes_number;
     }
 
     /**
@@ -353,6 +365,11 @@ public:
         return _adjacency_matrix[u_index][v_index];
     }
 
+    /**
+     * @brief Iteratore costante per la classe Digraph.
+     * 
+     * Itera sugli identificativi dei nodi presenti nel grafo.
+     */
     class const_iterator {
 		const T* _ptr;
 
@@ -370,10 +387,19 @@ public:
 		typedef const T*                  pointer;
 		typedef const T&                  reference;
 
+        /**
+         * @brief Costruttore di default.
+         */
 		const_iterator() : _ptr(nullptr) {}
 		
+        /**
+         * @brief Costruttore di copia.
+         */
 		const_iterator(const const_iterator& other) : _ptr(other._ptr) {}
 
+        /**
+         * @brief Operatore di assegnamento.
+         */
 		const_iterator& operator=(const const_iterator& other) {
 			_ptr = other._ptr;
 			return *this;

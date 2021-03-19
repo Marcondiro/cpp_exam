@@ -1,6 +1,7 @@
 #include <iostream> //std::cout
 #include <cassert> //assert
 #include <string> //std::string
+#include <ostream> // std::ostream
 
 #include "digraph.h"
 
