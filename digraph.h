@@ -184,9 +184,10 @@ public:
 	 * @throw Eccezione di allocazione della memoria.
      */
     Digraph& operator= (const Digraph& other) {
-        Digraph tmp(other);
-        swap(tmp);
- 
+        if(this != &other) {
+            Digraph tmp(other);
+            this->swap(tmp);
+        }
         return *this;
     }
 
@@ -251,7 +252,7 @@ public:
         }
         tmp._edges_number = _edges_number;
 
-        swap(tmp);
+        this->swap(tmp);
     }
 
     /**
@@ -297,7 +298,7 @@ public:
             }
         }
 
-        swap(tmp);
+        this->swap(tmp);
     }
 
     /**
