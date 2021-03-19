@@ -281,9 +281,11 @@ public:
             }
         }
 
+        unsigned int k, l;
         for(unsigned int i = 0; i < tmp._nodes_number; ++i) {
             for(unsigned int j = 0; j < tmp._nodes_number; ++j) {
-                unsigned int k = i, l = j;
+                k = i;
+                l = j;
                 if(k >= node_index) {
                     ++k;
                 }
