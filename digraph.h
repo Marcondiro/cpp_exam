@@ -274,7 +274,7 @@ public:
                 }
                 tmp._adjacency_matrix[i][j] = _adjacency_matrix[k][l];
                 
-                if(_adjacency_matrix[i][j]) {
+                if(tmp._adjacency_matrix[i][j]) {
                     ++tmp._edges_number;
                 }
             }
