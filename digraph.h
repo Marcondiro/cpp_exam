@@ -60,13 +60,12 @@ class Digraph {
             throw;
         }
 
+        _nodes_number = nodes_number;
         for(unsigned int i = 0; i < nodes_number; ++i) {
             for(unsigned int j = 0; j < nodes_number; ++j) {
                 _adjacency_matrix[i][j] = false;
             }
         }
-        _nodes_number = nodes_number;
-        _edges_number = 0;
     }
 
     void clear() {
@@ -357,13 +356,12 @@ public:
     class const_iterator {
 		const T* _ptr;
 
-        // La classe container deve essere messa friend dell'iteratore per poter
-		// usare il costruttore di inizializzazione.
 		friend class Digraph;
 
-		// Costruttore privato di inizializzazione usato dalla classe container
-		// tipicamente nei metodi begin e end
-		explicit const_iterator(const T* node) : _ptr(node) {}
+		/**
+         * Costruttore privato di inizializzazione usato dalla classe container
+         */
+        explicit const_iterator(const T* node) : _ptr(node) {}
 
 	public:
 		typedef std::forward_iterator_tag iterator_category;
@@ -395,27 +393,35 @@ public:
 			return _ptr;
 		}
 		
-		// Operatore di iterazione post-incremento (i++)
+		/**
+         * @brief Operatore di iterazione pre-incremento (++i)
+         */
+		const_iterator& operator++() {
+			++_ptr;
+			return *this;
+		}
+
+		/**
+         * @brief Operatore di iterazione post-incremento (i++)
+         */
 		const_iterator operator++(int) {
 			const_iterator tmp(*this);
 			++_ptr;
 			return tmp;
 		}
 
-		// Operatore di iterazione pre-incremento (++i)
-		const_iterator& operator++() {
-			++_ptr;
-			return *this;
-		}
-
-		// Uguaglianza
-		bool operator==(const const_iterator &other) const {
+		/**
+         * @brief Operatore di uguaglianza
+         */
+		bool operator==(const const_iterator& other) const {
 			return (_ptr == other._ptr);
 		}
 		
-		// Diversita'
-		bool operator!=(const const_iterator &other) const {
-			return !(*this == other);
+		/**
+         * @brief Operatore di disuguaglianza
+         */
+		bool operator!=(const const_iterator& other) const {
+			return (_ptr != other._ptr);
 		}
 	}; // classe const_iterator
 
@@ -450,7 +456,7 @@ public:
  * @return Reference allo stream di output
  */
 template <typename T, typename E>
-std::ostream &operator<<(std::ostream &os, const Digraph<T,E>& digraph) {
+std::ostream& operator<<(std::ostream& os, const Digraph<T,E>& digraph) {
 	typename Digraph<T,E>::const_iterator i_row, i_column;
 
 	for(i_column  = digraph.begin(); i_column != digraph.end(); ++i_column) {
