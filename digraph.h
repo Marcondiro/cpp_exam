@@ -38,8 +38,13 @@ class Digraph {
      * @post _edges_number = 0
      * @throw eccezione di allocazione della memoria
      */
-    Digraph(unsigned int nodes_number):_nodes(nullptr), _nodes_number(0),
-            _adjacency_matrix(nullptr), _edges_number(0) {
+    explicit Digraph(unsigned int nodes_number): _nodes(nullptr),
+            _nodes_number(0), _adjacency_matrix(nullptr), _edges_number(0) {
+        
+        if(nodes_number == 0) {
+            return;
+        }
+
         try {
             _nodes = new T[nodes_number];
 
