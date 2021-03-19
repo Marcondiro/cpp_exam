@@ -42,11 +42,26 @@ struct Person_equal {
 };
 
 /**
+ * @brief Invia Person sullo stream
+ * 
+ * Ridefinizione dell'operatore di stream per l'invio del solo nome di Person
+ * sullo stream.
+ * 
+ * @param os Stream di output
+ * @param p Person da inviare
+ * @return Reference allo stream di output
+ */
+std::ostream& operator<<(std::ostream& os, const Person& p) {
+	os << p._first_name;
+	return os;
+}
+
+/**
  * @brief Funzione helper che genera un digraph di interi popolato.
  * 
  * Il grafo risultante rispecchia quello presente nella traccia del progetto. 
  */
-Digraph<int, Int_equal> test_helper_int() {
+Digraph<int, Int_equal> testHelperInt() {
     Digraph<int, Int_equal> g;
 
     for(int i = 1; i <= 6; ++i) {
@@ -68,7 +83,7 @@ Digraph<int, Int_equal> test_helper_int() {
 /**
  * @brief Funzione helper che genera un digraph di Person popolato.
  */
-Digraph<Person, Person_equal> test_helper_person() {
+Digraph<Person, Person_equal> testHelperPerson() {
     Digraph<Person, Person_equal> g;
     Person p[3] = {
         {"Alice", "Shrdlu", 'G'},
@@ -91,7 +106,7 @@ Digraph<Person, Person_equal> test_helper_person() {
 /**
  * @brief Test costruttori di Digraph.
  */
-void constructor_test() {
+void constructorTest() {
     Digraph<int, Int_equal>* graph_int = nullptr;
     Digraph<Person, Person_equal>* graph_person = nullptr;
 
@@ -108,8 +123,8 @@ void constructor_test() {
     delete graph_person;
     graph_person = nullptr;
 
-    Digraph<int, Int_equal> tmp_int = test_helper_int();
-    Digraph<Person, Person_equal> tmp_person = test_helper_person();
+    Digraph<int, Int_equal> tmp_int = testHelperInt();
+    Digraph<Person, Person_equal> tmp_person = testHelperPerson();
 
     //Costruttore di copia
     graph_int = new Digraph<int, Int_equal> (tmp_int);
@@ -131,16 +146,23 @@ void constructor_test() {
     
     delete graph_person;
     graph_person = nullptr;
+
+    //Test accesso a costruttore privato
+    /*
+    graph_person = new Digraph<Person, Person_equal> (100);
+    delete graph_person;
+    graph_person = nullptr;
+    */
 }
 
 /**
  * @brief Test assegnamento tra Digraph.
  */
-void assignment_test() {
+void assignmentTest() {
     Digraph<int, Int_equal> g1;
     Digraph<int, Int_equal> g2;
 
-    g1 = test_helper_int();
+    g1 = testHelperInt();
     g2 = g1;
     assert(g1.nodesNumber() == g2.nodesNumber());
     assert(g1.edgesNumber() == g2.edgesNumber());
@@ -154,7 +176,7 @@ void assignment_test() {
     Digraph<Person, Person_equal> g3;
     Digraph<Person, Person_equal> g4;
 
-    g3 = test_helper_person();
+    g3 = testHelperPerson();
     g4 = g3;
     assert(g3.nodesNumber() == g4.nodesNumber());
     assert(g3.edgesNumber() == g4.edgesNumber());
@@ -165,27 +187,58 @@ void assignment_test() {
 /**
  * @brief Test modifiche contenuto
  */
-void edit_test() {
-    Digraph<int, Int_equal> g1 = test_helper_int();
-    assert(g1.nodesNumber() == 6);
-    assert(g1.edgesNumber() == 8);
+void editTest() {
+    Digraph<int, Int_equal> g1;
 
     for(int i = 0; i < 200; ++i) {
-        g1.addNode(-i);
+        g1.addNode(i);
     }
-    assert(g1.nodesNumber() == 206);
+    assert(g1.nodesNumber() == 200);
+    //g1.addNode(0); //Test add nodo già esistente
 
     for(int i = 0; i < 200; i += 2) {
         for(int j = 1; j < 200; j += 2) {
-            g1.addEdge(-i, -j);
+            g1.addEdge(i, j);
         }
     }
-    assert(g1.edgesNumber() == 10008);
+    assert(g1.edgesNumber() == 10000);
+    //g1.addEdge(0, 1); //Test add arco già esistente
 
-    Digraph<Person, Person_equal> g2 = test_helper_person();
+    //g1.removeEdge(1, 0); //Test remove arco inesistente
+    for(int i = 0; i < 200; i += 4) {
+        for(int j = 1; j < 200; j += 4) {
+            g1.removeEdge(i, j);
+        }
+    }
+    assert(g1.edgesNumber() == 7500);
 
-    assert(g2.nodesNumber() == 3);
-    assert(g2.edgesNumber() == 4);
+    //g1.removeNode(-1); //Test remove nodo inesistente
+    for(int i = 0; i < 100; ++i) {
+        g1.removeNode(i);
+    }
+    assert(g1.nodesNumber() == 100);
+    assert(g1.edgesNumber() == 1875);
+
+    for(int i = 0; i < 100; ++i) {
+        assert(!g1.exists(i));
+    }
+    for(int i = 100; i < 200; ++i) {
+        assert(g1.exists(i));
+    }
+
+    for(int i = 100; i < 200; ++i) {
+        for(int j = 100; j < 200; ++j) {
+            if((i % 2) == 0  && ((j-1) % 2) == 0 &&
+                    ((i % 4) != 0 || ((j-1) % 4) != 0)) {
+                assert(g1.hasEdge(i, j));
+            }
+            else {
+                assert(!g1.hasEdge(i, j));
+            }
+        }
+    }
+
+    Digraph<Person, Person_equal> g2(testHelperPerson());
 
     g2.addNode(Person("Mario", "Rossi", 'V'));
     assert(g2.nodesNumber() == 4);
@@ -193,43 +246,115 @@ void edit_test() {
     g2.addEdge(Person("Alice", "Shrdlu", 'G'), Person("Mario", "Rossi", 'V'));
     assert(g2.edgesNumber() == 5);
 
-    //TODO test removes
+    g2.removeEdge(Person("Alice", "Shrdlu", 'G'),Person("Bob", "Etaoin", 'A'));
+    g2.removeEdge(Person("Bob", "Etaoin", 'A'),Person("Alice", "Shrdlu", 'G'));
+    assert(g2.edgesNumber() == 3);
+
+    g2.removeNode(Person("Bob", "Etaoin", 'A'));
+    g2.removeNode(Person("Alice", "Shrdlu", 'G'));
+    assert(g2.nodesNumber() == 2);
+    assert(g2.edgesNumber() == 0);
+
+    assert(!g2.exists(Person("Alice", "Shrdlu", 'G')));
+    assert(g2.exists(Person("Mario", "Rossi", 'V')));
+
+    assert(!g2.hasEdge(Person("Mario", "Rossi", 'V'), 
+        Person("Carl", "Thug", 'B')));
+}
+
+/**
+ * @brief Test iteratori
+ */
+void iteratorTest() {
+    Digraph<Person, Person_equal> g1(testHelperPerson());
+    Digraph<Person, Person_equal>::const_iterator i, ie = g1.end();
+
+    //Test operatore * e ->
+    i = g1.begin();
+    Digraph<Person, Person_equal> tmp(g1);
+    for(unsigned int j = 0; j < g1.nodesNumber(); ++j) {
+        tmp.removeNode(*i);
+        //std::cout << (*i) <<std::endl;
+        /*
+        std::cout << i->_first_name << " " <<
+            i->_last_name << " " <<
+            i->_eyes_color << std::endl;
+        */
+        ++i;
+    }
+    assert(tmp.nodesNumber() == 0);
+
+    //Test pre incremento e assegnamento
+    i = g1.begin();
+    Digraph<Person, Person_equal>::const_iterator i_tmp;
+    for(unsigned int j = 0; j < g1.nodesNumber(); ++j) {
+        assert(i != ie);
+        i_tmp = i;
+        ++i_tmp;
+        assert(i_tmp == ++i);
+    }
+    assert(i == ie);
+
+    //Test post incremento e copy constructor
+    i = g1.begin();
+    for(unsigned int j = 0; j < g1.nodesNumber(); ++j) {
+        Digraph<Person, Person_equal>::const_iterator tmp(i);
+        
+        assert(i != ie);
+        assert(tmp == i++);
+    }
+    assert(i == ie);
+
+    //Test const_iterator constness
+    i = g1.begin();
+    //(*i) = Person();
+    //i->_first_name = "!!";
+}
+
+/**
+ * @brief Test constness
+ */
+void constnessTest() {
+    const Digraph<Person, Person_equal> g(testHelperPerson()), tmp;
+
+    //g = testHelperPerson();
+    //g.addEdge(Person("Bob", "Etaoin", 'A'), Person("Carl", "Thug", 'B'));
+    //g.addNode(Person("Mario", "Rossi", 'V'));
+    g.begin();
+    g.edgesNumber();
+    g.end();
+    g.exists(Person("Mario", "Rossi", 'V'));
+    g.hasEdge(Person("Alice", "Shrdlu", 'G'), Person("Bob", "Etaoin", 'A'));
+    g.nodesNumber();
+    //g.removeEdge(Person("Bob", "Etaoin", 'A'), Person("Carl", "Thug", 'B'));
+    //g.removeNode(Person("Mario", "Rossi", 'V'));
+    //g.swap(tmp);
 }
 
 int main()
 {
+
 #ifndef NDEBUG
-    constructor_test();
+    constructorTest();
     std::cout << "Test costruttori completati con successo." << std::endl;
 
-    assignment_test();
+    assignmentTest();
     std::cout << "Test assegnamento completati con successo." << std::endl;
 
-    edit_test();
+    editTest();
     std::cout <<
         "Test modifiche al contenuto del Digraph completate con successo." <<
         std::endl;
 
-    //todo test constness
+    iteratorTest();
+    std::cout << "Test iteratori completati con successo." << std::endl;
+    
+    constnessTest();
+    std::cout << "Test constness completati con successo." << std::endl;
 
     std::cout << "-----------------------------" << std::endl;
     std::cout << "Test completati con successo." << std::endl;
 #endif
 
     return 0;
-}
-
-/**
- * @brief Invia Person sullo stream
- * 
- * Ridefinizione dell'operatore di stream per l'invio del solo nome di Person
- * sullo stream.
- * 
- * @param os Stream di output
- * @param p Person da inviare
- * @return Reference allo stream di output
- */
-std::ostream &operator<<(std::ostream &os, const Person& p) {
-	os << p._first_name;
-	return os;
 }
