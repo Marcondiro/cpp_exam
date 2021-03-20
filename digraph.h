@@ -34,6 +34,8 @@ class Digraph {
      * Costruttore PRIVATE che inizializza un Digraph avente il numero di nodi
      * specificato e privo di archi.
      * 
+     * Il chiamante DEVE occuparsi dell'inizializzazione di _nodes
+     * 
      * @param nodes_number Numero di nodi.
      * @post _nodes_number = nodes_number
      * @post _edges_number = 0
@@ -432,9 +434,7 @@ public:
          * @brief Operatore di iterazione post-incremento (i++)
          */
 		const_iterator operator++(int) {
-			const_iterator tmp(*this);
-			++_ptr;
-			return tmp;
+			return const_iterator(_ptr++);
 		}
 
 		/**
