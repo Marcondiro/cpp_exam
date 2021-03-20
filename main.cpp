@@ -7,6 +7,8 @@
 
 /**
  * @brief Funtore di uguaglianza tra int
+ * 
+ * Usa l'operatore == tra interi.
  */
 struct Int_equal {
     bool operator()(const int& a, const int& b) const {
@@ -34,6 +36,9 @@ struct Person {
 
 /**
  * @brief Funtore di uguaglianza tra Person.
+ * 
+ * Usa l'operatore == tra stringhe. In particolare verifica l'ugaglianza tra
+ * _fist_name e _last_name delle due istanze.
  */
 struct Person_equal {
     bool operator()(const Person& a, const Person& b) const {
@@ -115,13 +120,13 @@ void constructorTest() {
     graph_int = new Digraph<int, Int_equal> ();
     assert(graph_int->nodesNumber() == 0);
     assert(graph_int->edgesNumber() == 0);
-    delete graph_int;
+    delete graph_int; //test ~Digraph();
     graph_int = nullptr;
 
     graph_person = new Digraph<Person, Person_equal> ();
     assert(graph_person->nodesNumber() == 0);
     assert(graph_person->edgesNumber() == 0);
-    delete graph_person;
+    delete graph_person; //test ~Digraph();
     graph_person = nullptr;
 
     Digraph<int, Int_equal> tmp_int = testHelperInt();
@@ -136,16 +141,14 @@ void constructorTest() {
     assert(graph_int->hasEdge(1,2) == tmp_int.hasEdge(1,2));
     assert(graph_int->hasEdge(2,1) == tmp_int.hasEdge(2,1));
     //std::cout << (*graph_int) << std::endl;
-    
-    delete graph_int;
+    delete graph_int; //test ~Digraph();
     graph_int = nullptr;
 
     graph_person = new Digraph<Person, Person_equal> (tmp_person);
     assert(graph_person->nodesNumber() == tmp_person.nodesNumber());
     assert(graph_person->edgesNumber() == tmp_person.edgesNumber());
     //std::cout << (*graph_person) << std::endl;
-    
-    delete graph_person;
+    delete graph_person; //test ~Digraph();
     graph_person = nullptr;
 
     //Test accesso a costruttore privato
@@ -313,7 +316,7 @@ void iteratorTest() {
 }
 
 /**
- * @brief Test constness
+ * @brief Test constness dei metodi
  */
 void constnessTest() {
     const Digraph<Person, Person_equal> g(testHelperPerson()), tmp;
