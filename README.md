@@ -84,6 +84,7 @@ La coerenza delle dimensioni `nodesNumber()` e `edgesNumber` viene verificata in
 Il file Doxyfile è molto semplice e permette di generare documentazione HTML sfruttando i commenti del codice.
 
 ## 4. Makefile
+Per la compilazione utilizzo l'opzione `-std=c++0x` di g++ per motivi di compatibilità con il server di test.  
 Il Makefile è stato arricchito con alcune funzioni `PHONY` utili durante lo sviluppo:
 - `clear` elimina i file `.o` e `.exe` prodotti dal compilatore
 - `docs` richiama doxygen per la creazione della documentazione
