@@ -92,9 +92,9 @@ Digraph<int, Int_equal> testHelperInt() {
 Digraph<Person, Person_equal> testHelperPerson() {
     Digraph<Person, Person_equal> g;
     Person p[3] = {
-        {"Alice", "Shrdlu", 'G'},
-        {"Bob", "Etaoin", 'A'},
-        {"Carl", "Thug", 'B'}
+        Person("Alice", "Shrdlu", 'G'),
+        Person("Bob", "Etaoin", 'A'),
+        Person("Carl", "Thug", 'B')
     };
 
     for(int i = 0; i < 3; ++i) {
