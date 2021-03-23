@@ -1,0 +1,1037 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>700</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Sudoku Solver</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>661</width>
+      <height>611</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <item row="5" column="0">
+        <widget class="QLineEdit" name="lineEdit_6_1">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLineEdit" name="lineEdit_1_1">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLineEdit" name="lineEdit_3_1">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="7">
+        <widget class="QLineEdit" name="lineEdit_1_8">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QLineEdit" name="lineEdit_7_3">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLineEdit" name="lineEdit_5_1">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <widget class="QLineEdit" name="lineEdit_9_3">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="lineEdit_3_3">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="lineEdit_6_2">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QLineEdit" name="lineEdit_2_5">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLineEdit" name="lineEdit_8_1">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLineEdit" name="lineEdit_4_1">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLineEdit" name="lineEdit_1_3">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="lineEdit_8_2">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6">
+        <widget class="QLineEdit" name="lineEdit_1_7">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QLineEdit" name="lineEdit_1_5">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QLineEdit" name="lineEdit_2_6">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QLineEdit" name="lineEdit_8_3">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLineEdit" name="lineEdit_3_4">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QLineEdit" name="lineEdit_6_3">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLineEdit" name="lineEdit_7_1">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLineEdit" name="lineEdit_5_3">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLineEdit" name="lineEdit_9_1">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="lineEdit_5_2">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="lineEdit_2_1">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="6">
+        <widget class="QLineEdit" name="lineEdit_3_7">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLineEdit" name="lineEdit_2_4">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLineEdit" name="lineEdit_1_4">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="lineEdit_2_3">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="lineEdit_1_2">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="5">
+        <widget class="QLineEdit" name="lineEdit_3_6">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLineEdit" name="lineEdit_9_2">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="7">
+        <widget class="QLineEdit" name="lineEdit_2_8">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="lineEdit_4_3">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="lineEdit_2_2">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <widget class="QLineEdit" name="lineEdit_1_6">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="7">
+        <widget class="QLineEdit" name="lineEdit_3_8">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="lineEdit_7_2">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="lineEdit_4_2">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="lineEdit_3_2">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QLineEdit" name="lineEdit_3_5">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="6">
+        <widget class="QLineEdit" name="lineEdit_2_7">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="8">
+        <widget class="QLineEdit" name="lineEdit_1_9">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="8">
+        <widget class="QLineEdit" name="lineEdit_2_9">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="8">
+        <widget class="QLineEdit" name="lineEdit_3_9">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="5">
+        <widget class="QLineEdit" name="lineEdit_4_6">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="5">
+        <widget class="QLineEdit" name="lineEdit_6_6">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="5">
+        <widget class="QLineEdit" name="lineEdit_5_6">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="4">
+        <widget class="QLineEdit" name="lineEdit_4_5">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QLineEdit" name="lineEdit_5_5">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="4">
+        <widget class="QLineEdit" name="lineEdit_6_5">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3">
+        <widget class="QLineEdit" name="lineEdit_6_4">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLineEdit" name="lineEdit_5_4">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="lineEdit_4_4">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="8">
+        <widget class="QLineEdit" name="lineEdit_6_9">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="8">
+        <widget class="QLineEdit" name="lineEdit_5_9">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="7">
+        <widget class="QLineEdit" name="lineEdit_6_8">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="7">
+        <widget class="QLineEdit" name="lineEdit_5_8">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="8">
+        <widget class="QLineEdit" name="lineEdit_4_9">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="7">
+        <widget class="QLineEdit" name="lineEdit_4_8">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="6">
+        <widget class="QLineEdit" name="lineEdit_6_7">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="6">
+        <widget class="QLineEdit" name="lineEdit_5_7">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="6">
+        <widget class="QLineEdit" name="lineEdit_4_7">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="8">
+        <widget class="QLineEdit" name="lineEdit_7_9">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="7">
+        <widget class="QLineEdit" name="lineEdit_7_8">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="8">
+        <widget class="QLineEdit" name="lineEdit_9_9">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="8">
+        <widget class="QLineEdit" name="lineEdit_8_9">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="7">
+        <widget class="QLineEdit" name="lineEdit_8_8">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="7">
+        <widget class="QLineEdit" name="lineEdit_9_8">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="6">
+        <widget class="QLineEdit" name="lineEdit_9_7">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="6">
+        <widget class="QLineEdit" name="lineEdit_8_7">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="6">
+        <widget class="QLineEdit" name="lineEdit_7_7">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="5">
+        <widget class="QLineEdit" name="lineEdit_9_6">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="4">
+        <widget class="QLineEdit" name="lineEdit_8_5">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="5">
+        <widget class="QLineEdit" name="lineEdit_8_6">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="5">
+        <widget class="QLineEdit" name="lineEdit_7_6">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="4">
+        <widget class="QLineEdit" name="lineEdit_7_5">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="4">
+        <widget class="QLineEdit" name="lineEdit_9_5">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="3">
+        <widget class="QLineEdit" name="lineEdit_9_4">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="3">
+        <widget class="QLineEdit" name="lineEdit_8_4">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QLineEdit" name="lineEdit_7_4">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="pushButton_clear">
+         <property name="text">
+          <string>Pulisci</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_previous">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>&lt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_next">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_resolve">
+         <property name="text">
+          <string>Risolvi</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Suggerimento: utilizza il tasto Tab per procedere tra le caselle.</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>700</width>
+     <height>38</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <tabstops>
+  <tabstop>lineEdit_1_1</tabstop>
+  <tabstop>lineEdit_1_2</tabstop>
+  <tabstop>lineEdit_1_3</tabstop>
+  <tabstop>lineEdit_1_4</tabstop>
+  <tabstop>lineEdit_1_5</tabstop>
+  <tabstop>lineEdit_1_6</tabstop>
+  <tabstop>lineEdit_1_7</tabstop>
+  <tabstop>lineEdit_1_8</tabstop>
+  <tabstop>lineEdit_1_9</tabstop>
+  <tabstop>lineEdit_2_1</tabstop>
+  <tabstop>lineEdit_2_2</tabstop>
+  <tabstop>lineEdit_2_3</tabstop>
+  <tabstop>lineEdit_2_4</tabstop>
+  <tabstop>lineEdit_2_5</tabstop>
+  <tabstop>lineEdit_2_6</tabstop>
+  <tabstop>lineEdit_2_7</tabstop>
+  <tabstop>lineEdit_2_8</tabstop>
+  <tabstop>lineEdit_2_9</tabstop>
+  <tabstop>lineEdit_3_1</tabstop>
+  <tabstop>lineEdit_3_2</tabstop>
+  <tabstop>lineEdit_3_3</tabstop>
+  <tabstop>lineEdit_3_4</tabstop>
+  <tabstop>lineEdit_3_5</tabstop>
+  <tabstop>lineEdit_3_6</tabstop>
+  <tabstop>lineEdit_3_7</tabstop>
+  <tabstop>lineEdit_3_8</tabstop>
+  <tabstop>lineEdit_3_9</tabstop>
+  <tabstop>lineEdit_4_1</tabstop>
+  <tabstop>lineEdit_4_2</tabstop>
+  <tabstop>lineEdit_4_3</tabstop>
+  <tabstop>lineEdit_4_4</tabstop>
+  <tabstop>lineEdit_4_5</tabstop>
+  <tabstop>lineEdit_4_6</tabstop>
+  <tabstop>lineEdit_4_7</tabstop>
+  <tabstop>lineEdit_4_8</tabstop>
+  <tabstop>lineEdit_4_9</tabstop>
+  <tabstop>lineEdit_5_1</tabstop>
+  <tabstop>lineEdit_5_2</tabstop>
+  <tabstop>lineEdit_5_3</tabstop>
+  <tabstop>lineEdit_5_4</tabstop>
+  <tabstop>lineEdit_5_5</tabstop>
+  <tabstop>lineEdit_5_6</tabstop>
+  <tabstop>lineEdit_5_7</tabstop>
+  <tabstop>lineEdit_5_8</tabstop>
+  <tabstop>lineEdit_5_9</tabstop>
+  <tabstop>lineEdit_6_1</tabstop>
+  <tabstop>lineEdit_6_2</tabstop>
+  <tabstop>lineEdit_6_3</tabstop>
+  <tabstop>lineEdit_6_4</tabstop>
+  <tabstop>lineEdit_6_5</tabstop>
+  <tabstop>lineEdit_6_6</tabstop>
+  <tabstop>lineEdit_6_7</tabstop>
+  <tabstop>lineEdit_6_8</tabstop>
+  <tabstop>lineEdit_6_9</tabstop>
+  <tabstop>lineEdit_7_1</tabstop>
+  <tabstop>lineEdit_7_2</tabstop>
+  <tabstop>lineEdit_7_3</tabstop>
+  <tabstop>lineEdit_7_4</tabstop>
+  <tabstop>lineEdit_7_5</tabstop>
+  <tabstop>lineEdit_7_6</tabstop>
+  <tabstop>lineEdit_7_7</tabstop>
+  <tabstop>lineEdit_7_8</tabstop>
+  <tabstop>lineEdit_7_9</tabstop>
+  <tabstop>lineEdit_8_1</tabstop>
+  <tabstop>lineEdit_8_2</tabstop>
+  <tabstop>lineEdit_8_3</tabstop>
+  <tabstop>lineEdit_8_4</tabstop>
+  <tabstop>lineEdit_8_5</tabstop>
+  <tabstop>lineEdit_8_6</tabstop>
+  <tabstop>lineEdit_8_7</tabstop>
+  <tabstop>lineEdit_8_8</tabstop>
+  <tabstop>lineEdit_8_9</tabstop>
+  <tabstop>lineEdit_9_1</tabstop>
+  <tabstop>lineEdit_9_2</tabstop>
+  <tabstop>lineEdit_9_3</tabstop>
+  <tabstop>lineEdit_9_4</tabstop>
+  <tabstop>lineEdit_9_5</tabstop>
+  <tabstop>lineEdit_9_6</tabstop>
+  <tabstop>lineEdit_9_7</tabstop>
+  <tabstop>lineEdit_9_8</tabstop>
+  <tabstop>lineEdit_9_9</tabstop>
+  <tabstop>pushButton_clear</tabstop>
+  <tabstop>pushButton_previous</tabstop>
+  <tabstop>pushButton_next</tabstop>
+  <tabstop>pushButton_resolve</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
