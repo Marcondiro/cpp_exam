@@ -117,13 +117,25 @@ void constructorTest() {
     Digraph<Person, Person_equal>* graph_person = nullptr;
 
     //Costruttore di default
-    graph_int = new Digraph<int, Int_equal> ();
+    try {
+        graph_int = new Digraph<int, Int_equal> ();
+    } catch (...) {
+        std::cout << "Errore durante l'allocazione del Digraph di interi, " <<
+            "test costruttore di default fallito." << std::endl;
+        throw;
+    }
     assert(graph_int->nodesNumber() == 0);
     assert(graph_int->edgesNumber() == 0);
     delete graph_int; //test ~Digraph();
     graph_int = nullptr;
 
-    graph_person = new Digraph<Person, Person_equal> ();
+    try {
+        graph_person = new Digraph<Person, Person_equal> ();
+    } catch (...) {
+        std::cout << "Errore durante l'allocazione del Digraph di Person, " <<
+            "test costruttore di default fallito." << std::endl;
+        throw;
+    }
     assert(graph_person->nodesNumber() == 0);
     assert(graph_person->edgesNumber() == 0);
     delete graph_person; //test ~Digraph();
@@ -133,7 +145,13 @@ void constructorTest() {
     Digraph<Person, Person_equal> tmp_person = testHelperPerson();
 
     //Costruttore di copia
-    graph_int = new Digraph<int, Int_equal> (tmp_int);
+    try {
+        graph_int = new Digraph<int, Int_equal> (tmp_int);
+    } catch (...) {
+        std::cout << "Errore durante l'allocazione del Digraph di interi, " <<
+            "test costruttore di copia fallito." << std::endl;
+        throw;
+    }
     assert(graph_int->nodesNumber() == tmp_int.nodesNumber());
     assert(graph_int->edgesNumber() == tmp_int.edgesNumber());
     assert(graph_int->exists(1) == tmp_int.exists(1));
@@ -144,7 +162,13 @@ void constructorTest() {
     delete graph_int; //test ~Digraph();
     graph_int = nullptr;
 
-    graph_person = new Digraph<Person, Person_equal> (tmp_person);
+    try {
+        graph_person = new Digraph<Person, Person_equal> (tmp_person);
+    } catch (...) {
+        std::cout << "Errore durante l'allocazione del Digraph di Person, " <<
+            "test costruttore di copia fallito." << std::endl;
+        throw;
+    }
     assert(graph_person->nodesNumber() == tmp_person.nodesNumber());
     assert(graph_person->edgesNumber() == tmp_person.edgesNumber());
     //std::cout << (*graph_person) << std::endl;
@@ -152,11 +176,7 @@ void constructorTest() {
     graph_person = nullptr;
 
     //Test accesso a costruttore privato
-    /*
-    graph_person = new Digraph<Person, Person_equal> (100);
-    delete graph_person;
-    graph_person = nullptr;
-    */
+    //Digraph<Person, Person_equal> g(100);
 }
 
 /**
