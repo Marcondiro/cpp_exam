@@ -5,7 +5,7 @@
 ---
 
 ## 1. Classe Digraph
-La classe deve implementare un **grafo orienatato**.
+La classe deve implementare un **grafo orienatato**.  
 Dato che nella traccia del progeto è indicato che
 >I nodi  sono  rappresentati  da  un generico identificativo
 
@@ -36,19 +36,19 @@ Questo costruttore è l'unico metodo della classe che alloca risorse sullo heap,
 Il metodo è definito privato perchè l'array degli identificativi istanziato non viene inizializzato, se questo costruttore fosse accessibile all'esterno si otterrebbe un Digraph **non consistente**. I metodi della classe che utilizzano questo costruttore **devono** occuparsi dell'inizializzazione dell'array degli identificativi.  
 In caso di fallimento dell'allocazione di memoria il costruttore si occupa di ripristinare uno stato coerente della memoria e dell'istanza di Digraph tramite il metodo clear() e rilancia l'eccezione al chiamante.  
 Ho utilizzato la keyword explicit per evitare di utilizzare il costruttore in modo implicito per errore.
-- Il metodo `clear` si occupa della deallocazione di tutte le risorse della classe allocate dinamicamente. Al termine della sua esecuzione si ottiene un grafo vuoto, senza archi e nodi, ma l'oggetto risulta comunque coerente perchè il metodo aggiorna anche gli attributi `_nodes_nmumber` e `_edges_number`.
+- Il metodo `clear` si occupa della deallocazione di tutte le risorse della classe allocate dinamicamente. Al termine della sua esecuzione si ottiene un grafo vuoto, senza archi e nodi, ma l'oggetto risulta comunque coerente perchè il metodo aggiorna anche gli attributi `_nodes_number` e `_edges_number`.
 - Il metodo `nodeIndex` è un metodo privato che prende in input un oggetto di tipo `T` e ritorna la sua posizione all'interno dell'array `_nodes` sfruttando il funtore `_equal` per fare i confronti. Questa informazione è utile in diversi metodi pubblici della classe Digraph. Il metodo è definito privato in quanto questa informazione non ha utilità all'esterno della classe stessa.  
-Nel caso il nodo non fosse presente nel grafo viene restituito il valore di `_nodes_number`. Il valore di ogni indice valido sarà minore di `_nodes_number`, questo ci permette di utilizzare il suo valore per indicare che il nodo non è presente.
+Nel caso il nodo non fosse presente nel grafo, viene restituito il valore di `_nodes_number`. Il valore di ogni indice valido sarà minore di `_nodes_number`, ciò mi permette di utilizzare questo valore per indicare che il nodo non è presente.
 - Il metodo `setEdge` si è reso utile durante lo sviluppo dei metodi `addEdge` e `removeEdge`. Questo metodo evita di avere codice duplicato nei due metodi. Il metodo prende in input due vertici che identificano un arco e se tale arco esiste viene eliminato, se non esiste viene creato.
 
 Nella sezione `public` della classe ho definito i seguenti metodi:
 - Il **costruttore** di default che istanzia un grafo vuoto.
-- Il **costruttore** di copia. Esso sfrutta al suo interno il costruttore privato per generare un grafo di dimensione pari a quella del grafo da copiare e successivamente effettua la copia di nodi e archi.
+- Il **costruttore** di copia. Esso sfrutta al suo interno il costruttore privato per generare un grafo di dimensione pari a quella del grafo da copiare ed effettua la copia di nodi e archi.
 - Il **distruttore** semplicemente richiama il metodo `clear`.
 - L'operatore di assegnamento `operator=`, dopo aver fatto il controllo dell'autoassegnamento, sfrutta il costruttore di copia e il meotodo `swap` per effettuare l'assegnamento.
-- Il metodo `swap` effettua la swap membro a membro tra this e un Digraph passato per parametro. Questo metodo è molto utile anche all'interno della classe stessa.
+- Il metodo `swap` effettua la swap membro a membro tra this e un Digraph passato per parametro. Questo metodo è molto utile anche nei metodi della classe stessa.
 - Il metodo `nodesNumber` restituisce il numero di nodi del grafo.
-- Il metodo `edgesnumber` restituisce il numero di archi del grafo.
+- Il metodo `edgesNumber` restituisce il numero di archi del grafo.
 - Il metodo `addNode` permette di aggiungere un nodo al grafo, se non già presente. Utilizza al suo interno il costruttore privato per istanziare un grafo con un nodo in più del grafo corrente (ovvero con una matrice di adiacenza con una riga e una colonna in più). Dopodichè copia tutti i dati del grafo corrente aggiungendo il nuovo nodo "in coda". Il nodo viene inserito come nodo isolato, privo di archi entranti e uscenti.
 - Il metodo `removeNode` permette di rimuovere un nodo dal grafo, se presente. Utilizza al suo interno il costruttore privato per istanziare un grafo con un nodo in meno del grafo corrente. Dopodichè copia tutti i dati del grafo corrente rimuovendo il nodo scelto e i relativi archi. In questo metodo è necessario ricalcolare il numero degli archi.
 - Il metodo `addEdge` aggiunge un arco al grafo, se non già presente. Viene sfruttato il metodo privato `setEdge`.
@@ -78,7 +78,7 @@ Nello specifico i blocchi di test implementati sono:
 - `iteratorTest` testa l'iteratore.
 - `constnessTest` verifica la corretta definizione dei metodi come const o non const.
 
-La coerenza delle dimensioni `nodesNumber()` e `edgesNumber` viene verificata in diversi blocchi di test.
+La coerenza delle dimensioni `nodesNumber()` e `edgesNumber()` viene verificata in diversi blocchi di test.
 
 ## 3. Doxyfile
 Il file Doxyfile è molto semplice e permette di generare documentazione HTML sfruttando i commenti del codice.
