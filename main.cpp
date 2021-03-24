@@ -291,7 +291,7 @@ void editTest() {
  */
 void iteratorTest() {
     Digraph<Person, Person_equal> g1(testHelperPerson());
-    Digraph<Person, Person_equal>::const_iterator i, ie = g1.end();
+    Digraph<Person, Person_equal>::const_iterator i = g1.begin(),ie = g1.end();
 
     //Test operatore * e ->
     i = g1.begin();
