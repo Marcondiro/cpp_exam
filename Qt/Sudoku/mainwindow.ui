@@ -19,7 +19,7 @@
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>661</width>
+      <width>651</width>
       <height>611</height>
      </rect>
     </property>
@@ -864,6 +864,16 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_begin">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>&lt;&lt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pushButton_previous">
          <property name="enabled">
           <bool>false</bool>
@@ -880,6 +890,16 @@
          </property>
          <property name="text">
           <string>&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_end">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>&gt;&gt;</string>
          </property>
         </widget>
        </item>
@@ -904,31 +924,6 @@
         </widget>
        </item>
       </layout>
-     </item>
-     <item>
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Suggerimento: utilizza il tasto Tab per procedere tra le caselle.</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </widget>

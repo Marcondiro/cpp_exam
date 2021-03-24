@@ -64,6 +64,7 @@ void MainWindow::on_pushButton_resolve_clicked()
     current_move = moves.cbegin();
     if(current_move != moves.cend()) {
         ui->pushButton_previous->setEnabled(true);
+        ui->pushButton_begin->setEnabled(true);
     }
 }
 
@@ -74,12 +75,14 @@ void MainWindow::on_pushButton_clear_clicked() {
 
     // Disabilito navigazione mosse
     ui->pushButton_previous->setEnabled(false);
+    ui->pushButton_begin->setEnabled(false);
     ui->pushButton_next->setEnabled(false);
+    ui->pushButton_end->setEnabled(false);
 
     // Pulisco griglia e riabilito inserimento
     for (int i = 0; i < 9; ++i) {
         for (int j = 0; j < 9; ++j) {
-            QWidget *w = ui->gridLayout->itemAtPosition(i, j)->widget();
+            QWidget* w = ui->gridLayout->itemAtPosition(i, j)->widget();
             QLineEdit* cell = static_cast<QLineEdit*>(w);
             cell->clear();
             cell->setStyleSheet("color: balck");
@@ -94,7 +97,7 @@ void MainWindow::on_pushButton_clear_clicked() {
 void MainWindow::on_pushButton_previous_clicked()
 {
     //Rimuovo mossa più recente
-    QWidget *w = ui->gridLayout->itemAtPosition(
+    QWidget* w = ui->gridLayout->itemAtPosition(
                 current_move->row,
                 current_move->column
             )->widget();
@@ -105,9 +108,32 @@ void MainWindow::on_pushButton_previous_clicked()
     //Se non ci sono mosse precedenti disattivo il bottone.
     if(current_move == moves.cend()) {
         ui->pushButton_previous->setEnabled(false);
+        ui->pushButton_begin->setEnabled(false);
     }
-    //Abilito bottone next
+    //Abilito bottone next e end
     ui->pushButton_next->setEnabled(true);
+    ui->pushButton_end->setEnabled(true);
+}
+
+void MainWindow::on_pushButton_begin_clicked()
+{
+    //Rimuovo tutte le mosse
+    while(current_move != moves.cend()) {
+        QWidget* w = ui->gridLayout->itemAtPosition(
+                    current_move->row,
+                    current_move->column
+                )->widget();
+        QLineEdit* cell = static_cast<QLineEdit*>(w);
+        cell->setText("");
+        ++current_move;
+    }
+
+    //Non ci sono mosse precedenti, disattivo i bottoni.
+    ui->pushButton_previous->setEnabled(false);
+    ui->pushButton_begin->setEnabled(false);
+    //Abilito bottone next e end
+    ui->pushButton_next->setEnabled(true);
+    ui->pushButton_end->setEnabled(true);
 }
 
 void MainWindow::on_pushButton_next_clicked()
@@ -116,9 +142,11 @@ void MainWindow::on_pushButton_next_clicked()
     //Se non ci sono mosse successive disattivo il bottone.
     if(current_move == moves.cbegin()) {
         ui->pushButton_next->setEnabled(false);
+        ui->pushButton_end->setEnabled(false);
     }
-    //Abilito bottone previous
+    //Abilito bottone previous e begin
     ui->pushButton_previous->setEnabled(true);
+    ui->pushButton_begin->setEnabled(true);
 
     //Mostro la mossa successiva
     QWidget *w = ui->gridLayout->itemAtPosition(
@@ -127,6 +155,27 @@ void MainWindow::on_pushButton_next_clicked()
             )->widget();
     QLineEdit* cell = static_cast<QLineEdit*>(w);
     cell->setText(QString::number(current_move->value));
+}
+
+void MainWindow::on_pushButton_end_clicked()
+{
+    //Mostro tutte le mosse
+    while(current_move != moves.cbegin()) {
+        --current_move;
+        QWidget *w = ui->gridLayout->itemAtPosition(
+                    current_move->row,
+                    current_move->column
+                )->widget();
+        QLineEdit* cell = static_cast<QLineEdit*>(w);
+        cell->setText(QString::number(current_move->value));
+    }
+
+    //Non ci sono mosse successive, disattivo i bottoni.
+    ui->pushButton_next->setEnabled(false);
+    ui->pushButton_end->setEnabled(false);
+    //Abilito bottone next e end
+    ui->pushButton_previous->setEnabled(true);
+    ui->pushButton_begin->setEnabled(true);
 }
 
 bool MainWindow::solve() {
@@ -175,7 +224,7 @@ void MainWindow::save_sudoku(){
     }
 }
 
-bool MainWindow::valid_cell(int row, int column) {
+bool MainWindow::valid_cell(const int& row, const int& column) {
     short number = sudoku[row][column];
 
     //Controllo riga

@@ -24,6 +24,10 @@ private slots:
 
     void on_pushButton_next_clicked();
 
+    void on_pushButton_begin_clicked();
+
+    void on_pushButton_end_clicked();
+
 private:
     short sudoku[9][9]; ///< Matrice contenente il Sudoku
 
