@@ -37,8 +37,8 @@ class Digraph {
      * Il chiamante DEVE occuparsi dell'inizializzazione di _nodes
      * 
      * @param nodes_number Numero di nodi.
-     * @post _nodes_number = nodes_number
-     * @post _edges_number = 0
+     * @post _nodes_number == nodes_number
+     * @post _edges_number == 0
      * @throw eccezione di allocazione della memoria
      */
     explicit Digraph(const unsigned int& nodes_number): _nodes(nullptr),
@@ -132,10 +132,10 @@ public:
      * 
      * Inizializza un grafo vuoto senza nodi e senza archi.
      * 
-     * @post _nodes = nullptr
-     * @post _nodes_number = 0
-     * @post _adj_matrix = nullptr
-     * @post _edges_number = 0
+     * @post _nodes == nullptr
+     * @post _nodes_number == 0
+     * @post _adj_matrix == nullptr
+     * @post _edges_number == 0
      */
     Digraph():_nodes(nullptr), _nodes_number(0), _adj_matrix(nullptr),
             _edges_number(0) {}
@@ -169,10 +169,10 @@ public:
      * 
      * Dealloca tutte le risorse allocate dinamicamente.
      * 
-     * @post _nodes = nullptr
-     * @post _nodes_number = 0
-     * @post _adjacent_matrix = nullptr
-     * @post _edges_number = 0
+     * @post _nodes == nullptr
+     * @post _nodes_number == 0
+     * @post _adjacent_matrix == nullptr
+     * @post _edges_number == 0
      */
     ~Digraph() {
         clear();
@@ -194,7 +194,7 @@ public:
     }
 
     /**
-     * @brief Swap tra *this e il Digraph passato.
+     * @brief Swap tra *this e il Digraph other.
      * 
      * @param other Digraph con cui eseguire la swap
      */
@@ -230,7 +230,6 @@ public:
      * 
      * @param node Nodo da inserire.
      * @pre !exists(node)
-     * @post _nodes_number = _nodes_number + 1
      * @throw Eccezione di allocazione di memoria.
      */
     void addNode(const T& node) {
@@ -265,7 +264,6 @@ public:
      * 
      * @param node Nodo da rimuovere.
      * @pre exists(node)
-     * @post _nodes_number = _nodes_number - 1
      * @throw Eccezione di allocazione di memoria.
      */
     void removeNode(const T& node) {
