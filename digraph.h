@@ -41,7 +41,7 @@ class Digraph {
      * @post _edges_number == 0
      * @throw eccezione di allocazione della memoria
      */
-    explicit Digraph(const unsigned int& nodes_number): _nodes(nullptr),
+    explicit Digraph(const unsigned int& nodes_number) : _nodes(nullptr),
             _nodes_number(0), _adj_matrix(nullptr), _edges_number(0) {
         
         if (nodes_number == 0) {
@@ -137,7 +137,7 @@ public:
      * @post _adj_matrix == nullptr
      * @post _edges_number == 0
      */
-    Digraph():_nodes(nullptr), _nodes_number(0), _adj_matrix(nullptr),
+    Digraph() : _nodes(nullptr), _nodes_number(0), _adj_matrix(nullptr),
             _edges_number(0) {}
 
     /**
@@ -146,7 +146,7 @@ public:
      * @param other Digraph da copiare
      * @throw eccezione di allocazione della memoria
      */
-    Digraph(const Digraph& other): _nodes(nullptr), _nodes_number(0),
+    Digraph(const Digraph& other) : _nodes(nullptr), _nodes_number(0),
             _adj_matrix(nullptr), _edges_number(0) {
         Digraph tmp(other._nodes_number);
 
@@ -182,8 +182,8 @@ public:
      * @brief Operatore di assegnamento.
      * 
      * @param other Digraph da assegnare.
-	 * @return reference al Digraph this.
-	 * @throw Eccezione di allocazione della memoria.
+     * @return reference al Digraph this.
+     * @throw Eccezione di allocazione della memoria.
      */
     Digraph& operator= (const Digraph& other) {
         if (this != &other) {
@@ -209,7 +209,7 @@ public:
      * @brief Ritorna il numero di nodi nel grafo.
      * 
      * @return  Numero di nodi.
-	 */
+     */
     unsigned int nodesNumber() const {
         return _nodes_number;
     }
@@ -218,7 +218,7 @@ public:
      * @brief Ritorna il numero di archi nel grafo.
      * 
      * @return  Numero di archi.
-	 */
+     */
     unsigned int edgesNumber() const {
         return _edges_number;
     }
@@ -372,101 +372,101 @@ public:
      * Itera sugli identificativi dei nodi presenti nel grafo.
      */
     class const_iterator {
-		const T* _ptr;
+        const T* _ptr;
 
-		friend class Digraph;
+        friend class Digraph;
 
-		/**
+        /**
          * Costruttore privato di inizializzazione usato dalla classe container
          */
         explicit const_iterator(const T* node) : _ptr(node) {}
 
-	public:
-		typedef std::forward_iterator_tag iterator_category;
-		typedef T                         value_type;
-		typedef ptrdiff_t                 difference_type;
-		typedef const T*                  pointer;
-		typedef const T&                  reference;
+    public:
+        typedef std::forward_iterator_tag iterator_category;
+        typedef T                         value_type;
+        typedef ptrdiff_t                 difference_type;
+        typedef const T*                  pointer;
+        typedef const T&                  reference;
 
         /**
          * @brief Costruttore di default.
          */
-		const_iterator() : _ptr(nullptr) {}
-		
+        const_iterator() : _ptr(nullptr) {}
+        
         /**
          * @brief Costruttore di copia.
          */
-		const_iterator(const const_iterator& other) : _ptr(other._ptr) {}
+        const_iterator(const const_iterator& other) : _ptr(other._ptr) {}
 
         /**
          * @brief Operatore di assegnamento.
          */
-		const_iterator& operator=(const const_iterator& other) {
-			_ptr = other._ptr;
-			return *this;
-		}
+        const_iterator& operator=(const const_iterator& other) {
+            _ptr = other._ptr;
+            return *this;
+        }
 
-		/**
+        /**
          * @brief Ritorna il dato riferito dall'iteratore (dereferenziamento).
          */
-		reference operator*() const {
-			return *_ptr;
-		}
+        reference operator*() const {
+            return *_ptr;
+        }
 
-		/**
+        /**
          * @brief Ritorna il puntatore al dato riferito dall'iteratore.
          */
-		pointer operator->() const {
-			return _ptr;
-		}
-		
-		/**
+        pointer operator->() const {
+            return _ptr;
+        }
+        
+        /**
          * @brief Operatore di iterazione pre-incremento (++i)
          */
-		const_iterator& operator++() {
-			++_ptr;
-			return *this;
-		}
+        const_iterator& operator++() {
+            ++_ptr;
+            return *this;
+        }
 
-		/**
+        /**
          * @brief Operatore di iterazione post-incremento (i++)
          */
-		const_iterator operator++(int) {
-			return const_iterator(_ptr++);
-		}
+        const_iterator operator++(int) {
+            return const_iterator(_ptr++);
+        }
 
-		/**
+        /**
          * @brief Operatore di uguaglianza
          */
-		bool operator==(const const_iterator& other) const {
-			return (_ptr == other._ptr);
-		}
-		
-		/**
+        bool operator==(const const_iterator& other) const {
+            return (_ptr == other._ptr);
+        }
+        
+        /**
          * @brief Operatore di disuguaglianza
          */
-		bool operator!=(const const_iterator& other) const {
-			return (_ptr != other._ptr);
-		}
-	}; //class const_iterator
+        bool operator!=(const const_iterator& other) const {
+            return (_ptr != other._ptr);
+        }
+    }; //class const_iterator
 
     /**
      * @brief Ritorna l'iteratore all'inizio della sequenza di nodi
      * 
      * @return const_iterator all'inizio della sequenza di nodi
      */
-	const_iterator begin() const {
-		return const_iterator(_nodes);
-	}
-	
-	/**
+    const_iterator begin() const {
+        return const_iterator(_nodes);
+    }
+    
+    /**
      * @brief Ritorna l'iteratore alla fine della sequenza di nodi
      * 
      * @return const_iterator alla fine della sequenza di nodi
      */
-	const_iterator end() const {
-		return const_iterator(_nodes + _nodes_number);
-	}
+    const_iterator end() const {
+        return const_iterator(_nodes + _nodes_number);
+    }
 
 }; //class Digraph
 
@@ -482,9 +482,9 @@ public:
  */
 template <typename T, typename E>
 std::ostream& operator<<(std::ostream& os, const Digraph<T,E>& digraph) {
-	typename Digraph<T,E>::const_iterator i_row, i_col;
+    typename Digraph<T,E>::const_iterator i_row, i_col;
 
-	for (i_col  = digraph.begin(); i_col != digraph.end(); ++i_col) {
+    for (i_col  = digraph.begin(); i_col != digraph.end(); ++i_col) {
         os << "\t" << *i_col;        
     }
 
@@ -497,7 +497,7 @@ std::ostream& operator<<(std::ostream& os, const Digraph<T,E>& digraph) {
         }
     }
 
-	return os;
+    return os;
 }
 
 #endif //digraph_h

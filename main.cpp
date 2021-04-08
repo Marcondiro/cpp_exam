@@ -24,11 +24,11 @@ struct Person {
     std::string _last_name;
     char _eyes_color;
 
-    Person():_eyes_color('B') {}
+    Person() : _eyes_color('B') {}
 
-    Person( const std::string& first_name,
+    Person(const std::string& first_name,
             const std::string& last_name,
-            char eyes_color):
+            char eyes_color) :
         _first_name(first_name),
         _last_name(last_name),
         _eyes_color(eyes_color) {}
@@ -58,8 +58,8 @@ struct Person_equal {
  * @return Reference allo stream di output
  */
 std::ostream& operator<<(std::ostream& os, const Person& p) {
-	os << p._first_name;
-	return os;
+    os << p._first_name;
+    return os;
 }
 
 /**
@@ -355,8 +355,7 @@ void constnessTest() {
     //g.swap(tmp);
 }
 
-int main()
-{
+int main() {
 
 #ifndef NDEBUG
     constructorTest();
