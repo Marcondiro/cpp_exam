@@ -482,7 +482,8 @@ public:
  */
 template <typename T, typename E>
 std::ostream& operator<<(std::ostream& os, const Digraph<T,E>& digraph) {
-    typename Digraph<T,E>::const_iterator i_row, i_col;
+    typename Digraph<T,E>::const_iterator i_row = digraph.begin(),
+                                          i_col = digraph.begin();
 
     for (i_col  = digraph.begin(); i_col != digraph.end(); ++i_col) {
         os << "\t" << *i_col;        

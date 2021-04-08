@@ -1,4 +1,4 @@
-#include <iostream> //std::cout
+#include <iostream> //std::cout std::cerr
 #include <cassert> //assert
 #include <string> //std::string
 #include <ostream> // std::ostream
@@ -116,12 +116,12 @@ void constructorTest() {
     Digraph<int, Int_equal>* graph_int = nullptr;
     Digraph<Person, Person_equal>* graph_person = nullptr;
 
-    //Costruttore di default
+    // Costruttore di default
     try {
         graph_int = new Digraph<int, Int_equal> ();
     } catch (...) {
-        std::cout << "Errore durante l'allocazione del Digraph di interi, " <<
-            "test costruttore di default fallito." << std::endl;
+        std::cerr << "Errore durante l'allocazione del Digraph di interi, "
+                  << "test costruttore di default fallito." << std::endl;
         throw;
     }
     assert(graph_int->nodesNumber() == 0);
@@ -132,8 +132,8 @@ void constructorTest() {
     try {
         graph_person = new Digraph<Person, Person_equal> ();
     } catch (...) {
-        std::cout << "Errore durante l'allocazione del Digraph di Person, " <<
-            "test costruttore di default fallito." << std::endl;
+        std::cerr << "Errore durante l'allocazione del Digraph di Person, "
+                  << "test costruttore di default fallito." << std::endl;
         throw;
     }
     assert(graph_person->nodesNumber() == 0);
@@ -144,12 +144,12 @@ void constructorTest() {
     Digraph<int, Int_equal> tmp_int = testHelperInt();
     Digraph<Person, Person_equal> tmp_person = testHelperPerson();
 
-    //Costruttore di copia
+    // Costruttore di copia
     try {
         graph_int = new Digraph<int, Int_equal> (tmp_int);
     } catch (...) {
-        std::cout << "Errore durante l'allocazione del Digraph di interi, " <<
-            "test costruttore di copia fallito." << std::endl;
+        std::cerr << "Errore durante l'allocazione del Digraph di interi, "
+                  << "test costruttore di copia fallito." << std::endl;
         throw;
     }
     assert(graph_int->nodesNumber() == tmp_int.nodesNumber());
@@ -165,7 +165,7 @@ void constructorTest() {
     try {
         graph_person = new Digraph<Person, Person_equal> (tmp_person);
     } catch (...) {
-        std::cout << "Errore durante l'allocazione del Digraph di Person, " <<
+        std::cerr << "Errore durante l'allocazione del Digraph di Person, " <<
             "test costruttore di copia fallito." << std::endl;
         throw;
     }
@@ -175,7 +175,7 @@ void constructorTest() {
     delete graph_person; //test ~Digraph();
     graph_person = nullptr;
 
-    //Test accesso a costruttore privato
+    // Test accesso a costruttore privato
     //Digraph<Person, Person_equal> g(100);
 }
 
@@ -218,7 +218,7 @@ void editTest() {
         g1.addNode(i);
     }
     assert(g1.nodesNumber() == 200);
-    //g1.addNode(0); //Test add nodo già esistente
+    //g1.addNode(0); // Test add nodo già esistente
 
     for(int i = 0; i < 200; i += 2) {
         for(int j = 1; j < 200; j += 2) {
@@ -226,9 +226,9 @@ void editTest() {
         }
     }
     assert(g1.edgesNumber() == 10000);
-    //g1.addEdge(0, 1); //Test add arco già esistente
+    //g1.addEdge(0, 1); // Test add arco già esistente
 
-    //g1.removeEdge(1, 0); //Test remove arco inesistente
+    //g1.removeEdge(1, 0); // Test remove arco inesistente
     for(int i = 0; i < 200; i += 4) {
         for(int j = 1; j < 200; j += 4) {
             g1.removeEdge(i, j);
@@ -236,7 +236,7 @@ void editTest() {
     }
     assert(g1.edgesNumber() == 7500);
 
-    //g1.removeNode(-1); //Test remove nodo inesistente
+    //g1.removeNode(-1); // Test remove nodo inesistente
     for(int i = 0; i < 100; ++i) {
         g1.removeNode(i);
     }
@@ -266,6 +266,7 @@ void editTest() {
 
     g2.addNode(Person("Mario", "Rossi", 'V'));
     assert(g2.nodesNumber() == 4);
+    //g2.addNode(Person("Mario", "Rossi", 'B')); // Test add nodo già esistente
 
     g2.addEdge(Person("Alice", "Shrdlu", 'G'), Person("Mario", "Rossi", 'V'));
     assert(g2.edgesNumber() == 5);
@@ -288,15 +289,16 @@ void editTest() {
 
 /**
  * @brief Test iteratori
+ * 
+ * Viene testato di conseguenza anche il metodo swap.
  */
 void iteratorTest() {
     Digraph<Person, Person_equal> g1(testHelperPerson());
     Digraph<Person, Person_equal>::const_iterator i = g1.begin(),ie = g1.end();
 
-    //Test operatore * e ->
-    i = g1.begin();
+    // Test operatore * e ->
     Digraph<Person, Person_equal> tmp(g1);
-    for(unsigned int j = 0; j < g1.nodesNumber(); ++j) {
+    for(i = g1.begin(), ie = g1.end(); i != ie; ++i) {
         tmp.removeNode(*i);
         //std::cout << (*i) <<std::endl;
         /*
@@ -304,11 +306,10 @@ void iteratorTest() {
             i->_last_name << " " <<
             i->_eyes_color << std::endl;
         */
-        ++i;
     }
-    assert(tmp.nodesNumber() == 0);
+    assert(tmp.nodesNumber() == 0); // L'iteratore itera su tutti i nodi
 
-    //Test pre incremento e assegnamento
+    // Test pre incremento e assegnamento
     i = g1.begin();
     Digraph<Person, Person_equal>::const_iterator i_tmp;
     for(unsigned int j = 0; j < g1.nodesNumber(); ++j) {
@@ -319,7 +320,7 @@ void iteratorTest() {
     }
     assert(i == ie);
 
-    //Test post incremento e copy constructor
+    // Test post incremento e copy constructor
     i = g1.begin();
     for(unsigned int j = 0; j < g1.nodesNumber(); ++j) {
         Digraph<Person, Person_equal>::const_iterator tmp(i);
@@ -329,7 +330,7 @@ void iteratorTest() {
     }
     assert(i == ie);
 
-    //Test const_iterator constness
+    // Test const_iterator constness
     i = g1.begin();
     //(*i) = Person();
     //i->_first_name = "!!";
@@ -365,9 +366,9 @@ int main() {
     std::cout << "Test assegnamento completati con successo." << std::endl;
 
     editTest();
-    std::cout <<
-        "Test modifiche al contenuto del Digraph completate con successo." <<
-        std::endl;
+    std::cout
+        << "Test modifiche al contenuto del Digraph completate con successo."
+        << std::endl;
 
     iteratorTest();
     std::cout << "Test iteratori completati con successo." << std::endl;
