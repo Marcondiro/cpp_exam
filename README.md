@@ -1,6 +1,5 @@
 # Grafo Orientato: scelte implementative
 ## Progetto d'esame del corso di **Programmazione C++** appello di aprile a.a. 2020-2021 UniMiB
-### *Marco Cavenati 845899 m.cavenati1@campus.unimib.it*
 
 ---
 
