@@ -284,12 +284,7 @@ public:
 
         try {
             for (unsigned int i = 0; i < tmp._nodes_number; ++i) {
-                if (node_index > i) {
-                    tmp._nodes[i] = _nodes[i];
-                }
-                else {
-                    tmp._nodes[i] = _nodes[i+1];
-                }
+                tmp._nodes[i] = (i < node_index) ? _nodes[i] : _nodes[i+1];
             }
         } catch(...) {
             tmp.clear();
