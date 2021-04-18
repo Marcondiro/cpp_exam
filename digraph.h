@@ -150,8 +150,13 @@ public:
             _adj_matrix(nullptr), _edges_number(0) {
         Digraph tmp(other._nodes_number);
 
-        for (unsigned int i = 0; i < tmp._nodes_number; ++i) {
-            tmp._nodes[i] = other._nodes[i];
+        try {
+            for (unsigned int i = 0; i < tmp._nodes_number; ++i) {
+                tmp._nodes[i] = other._nodes[i];
+            }
+        } catch(...) {
+            tmp.clear();
+            throw;
         }
 
         for (unsigned int i=0; i < tmp._nodes_number; ++i) {
@@ -237,10 +242,15 @@ public:
 
         Digraph tmp(_nodes_number + 1);
 
-        for (unsigned int i = 0; i < _nodes_number; ++i) {
-            tmp._nodes[i] = _nodes[i];
+        try {
+            for (unsigned int i = 0; i < _nodes_number; ++i) {
+                tmp._nodes[i] = _nodes[i];
+            }
+            tmp._nodes[_nodes_number] = node;
+        } catch(...) {
+            tmp.clear();
+            throw;
         }
-        tmp._nodes[_nodes_number] = node;
 
         for (unsigned int i = 0; i < _nodes_number; ++i) {
             for (unsigned int j = 0; j < _nodes_number; ++j) {
@@ -272,13 +282,18 @@ public:
         Digraph tmp(_nodes_number - 1);
         unsigned int node_index = nodeIndex(node);
 
-        for (unsigned int i = 0; i < tmp._nodes_number; ++i) {
-            if (node_index > i) {
-                tmp._nodes[i] = _nodes[i];
+        try {
+            for (unsigned int i = 0; i < tmp._nodes_number; ++i) {
+                if (node_index > i) {
+                    tmp._nodes[i] = _nodes[i];
+                }
+                else {
+                    tmp._nodes[i] = _nodes[i+1];
+                }
             }
-            else {
-                tmp._nodes[i] = _nodes[i+1];
-            }
+        } catch(...) {
+            tmp.clear();
+            throw;
         }
 
         unsigned int k, l;
