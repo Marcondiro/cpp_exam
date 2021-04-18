@@ -284,14 +284,9 @@ public:
         unsigned int k, l;
         for (unsigned int i = 0; i < tmp._nodes_number; ++i) {
             for (unsigned int j = 0; j < tmp._nodes_number; ++j) {
-                k = i;
-                l = j;
-                if (k >= node_index) {
-                    ++k;
-                }
-                if (l >= node_index) {
-                    ++l;
-                }
+                k = (i < node_index) ? i : i+1;
+                l = (j < node_index) ? j : j+1;
+                
                 tmp._adj_matrix[i][j] = _adj_matrix[k][l];
                 
                 if (tmp._adj_matrix[i][j]) {
