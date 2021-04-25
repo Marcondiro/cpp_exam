@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QVector>
+#include <QIntValidator>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,6 +30,8 @@ private slots:
     void on_pushButton_end_clicked();
 
 private:
+    QIntValidator validator;
+
     short sudoku[9][9]; ///< Matrice contenente il Sudoku
 
     /**

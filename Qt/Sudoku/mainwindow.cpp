@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 
 #include <QLineEdit>
-#include <QIntValidator>
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent),
@@ -12,16 +11,18 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent),
     setFixedSize(700, 700); // Dimensioni finestra fisse
 
     // Blocco l'inserimento di caratteri non numerici
+    validator.setRange(1,9);
     for (int i = 0; i < 9; ++i) {
         for (int j = 0; j < 9; ++j) {
             QWidget *w = ui->gridLayout->itemAtPosition(i, j)->widget();
             QLineEdit* cell = static_cast<QLineEdit*>(w);
-            cell->setValidator(new QIntValidator(1, 9));
+            cell->setValidator(&validator);
         }
     }
 }
 
 MainWindow::~MainWindow() {
+    moves.clear();
     delete ui;
 }
 
@@ -58,6 +59,7 @@ void MainWindow::on_pushButton_resolve_clicked()
     else{
         QMessageBox::warning(this, tr("Errore"),
                              tr("Impossibile risolvere il Sudoku."));
+        return;
     }
 
     //Abilito la navigazione tra le mosse
@@ -260,7 +262,7 @@ void MainWindow::print_sudoku() {
         for (int j = 0; j < 9; ++j) {
             QWidget *w = ui->gridLayout->itemAtPosition(i, j)->widget();
             QLineEdit* cell = static_cast<QLineEdit*>(w);
-            if(cell->text().isEmpty()){
+            if(cell->text().isEmpty() || cell->text().toInt() == 0){
                 cell->setStyleSheet("color: red");
                 cell->setText(QString::number(sudoku[i][j]));
             }
